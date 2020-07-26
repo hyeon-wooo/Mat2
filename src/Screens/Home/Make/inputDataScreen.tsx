@@ -6,50 +6,68 @@ import {
   Text,
   ScrollView,
   TouchableOpacity,
+  PermissionsAndroid,
+  Button,
+  Image
 } from 'react-native';
+import Header from '~/components/MakeHeader';
 import TextInputS from '~/components/TextInputS';
-import {NavigationContainer} from '@react-navigation/native';
+import ImagePicker from 'react-native-image-picker';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import {PERMISSIONS, RESULTS, request} from 'react-native-permissions';
 
-// const TextInputS = (placeholderText: string, isNeeded: boolean) => {
-//   const [focused, setFocused] = useState(false);
+const requestPermission = async (data:any, setIsImg:any, isImg:number, addData:any) => {
+  await request(PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE)
+  .then(result => {
+    if (result === RESULTS.GRANTED) {
+      ImagePicker.launchImageLibrary({
+        title: 'Load Photo',
+        storageOptions: {
+          skipBackup: true,
+          path: 'images',
+        },
+      }, (response) => {
+        if (response.didCancel) {
+          console.log('## loading photo is canceled ##')
+          
+        }
+        else if (response.error) {
+          console.log('## loading photo error ##', response)
+          
+        }
+        else {
+          // console.log('### img data ###', response.data)
+          // data.valueLogo = response.data
+          addData(response.data, 'valueLogo')
+          setIsImg(isImg+1)
+        }
+        
+      })
+    }
+  });
+}
 
-//   return (
-//     <View style={styles.inputContainer}>
-//       <Text style={styles.needItem}>{isNeeded ? '*' : ''}</Text>
-//       <TextInput
-//         placeholder={placeholderText}
-//         style={[
-//           styles.textInput,
-//           focused
-//             ? {borderBottomColor: '#6078EA'}
-//             : {borderBottomColor: '#444444'},
-//         ]}
-//         onFocus={() => setFocused(true)}
-//         onBlur={() => setFocused(false)}
-//       />
-//       <View style={{width: '5%'}} />
-//     </View>
-//   );
-// };
 
 interface Props {
   navigation: any;
 }
-
+let data = Object();
 const InputData = ({navigation}: Props) => {
-  let data = {};
+  const [isImg, setIsImg] = useState(0)
+
   const addData = (text: string, name: string) => {
-    data[name] = text;
+    if (text.length > 0) {
+      data[name] = text;
+    }
   };
+
   return (
     <View style={styles.body}>
       <View style={styles.header}>
-        <View style={styles.processContainer}>
-          <Text>Process Bar가 위치할 예정</Text>
-        </View>
-        <Text style={styles.processDescription}>
+        <Header current={1} finish={{}}/>
+        {/* <Text style={styles.processDescription}>
           * 명함에 들어갈 정보를 입력해주세요
-        </Text>
+        </Text> */}
       </View>
       <View style={styles.scrollViewContainer}>
         <ScrollView>
@@ -113,10 +131,39 @@ const InputData = ({navigation}: Props) => {
             onEndEditing={addData}
             name="valueFax"
           />
+
+          {/* <View>
+            <Button title='Press' onPress={() => {requestPermission(data)}} />
+          </View> */}
+
+          <Text style={{fontSize: 15, marginTop: 15, fontWeight: 'bold'}}> * 아래 버튼을 눌러 회사 로고(.png)를 추가해주세요 </Text>
+          <View style={styles.logoContainer}>
+
+            <TouchableOpacity key={isImg} style={styles.btnOpenLibrary} 
+            onPressOut={() => requestPermission(data, setIsImg, isImg, addData)} >
+              <AntDesign name='picture' size={70} />
+            </TouchableOpacity>
+
+            {isImg? 
+            (<View style={styles.logoSuccess}>
+              <Text style={styles.textSuccessLogo}> 로고가 추가되었습니다 </Text> 
+            </View>) : null}
+
+          </View>
+            
+
           <View style={styles.btnConatiner}>
             <TouchableOpacity
               style={styles.btnNext}
-              onPress={() => navigation.navigate('SelectMatLayout', data)}>
+              onPress={() => {
+                // console.log('## inpudData ##', data)
+                navigation.navigate('SelectMatLayout', data)
+                // if (data.cardName && data.valueName && data.valueEmail && data.valuePhone && data.valueFax && data.valueCompany && data.valueComAddr && data.valueComNum && data.valuePosition && data.valueTeam ) {
+                // }
+                // else {
+                //   // Alert modal
+                // }
+                }}>
               <Text style={styles.btnText}>다음</Text>
             </TouchableOpacity>
           </View>
@@ -132,11 +179,12 @@ const styles = StyleSheet.create({
   },
   header: {
     flex: 1,
-    width: '90%',
-    left: '5%',
+    
   },
   scrollViewContainer: {
-    flex: 4,
+    flex: 8,
+    width: '90%',
+    left: '5%',
   },
   processContainer: {
     flex: 5,
@@ -157,12 +205,35 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     justifyContent: 'center',
     alignItems: 'center',
+    transform: [{rotate: '90deg'}]
   },
   btnText: {
     fontFamily: 'sd_gothic_m',
     fontSize: 20,
     color: 'white',
   },
+  btnOpenLibrary: {
+    width: '35%',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  logoSuccess: {
+    width: '65%',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  logoContainer : {
+    height: 100,
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  textSuccessLogo: {
+    fontSize: 20,
+    fontFamily: 'sd_githic_m',
+    fontWeight: 'bold'
+  }
 });
 
 export default InputData;

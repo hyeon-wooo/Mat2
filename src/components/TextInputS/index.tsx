@@ -13,7 +13,7 @@ const TextInputS = ({placeholder, isNeeded, name, onEndEditing}: Props) => {
 
   return (
     <View style={styles.inputContainer}>
-      <Text style={styles.needItem}>{isNeeded ? '*' : ''}</Text>
+      
       <TextInput
         placeholder={placeholder}
         style={[
@@ -26,7 +26,7 @@ const TextInputS = ({placeholder, isNeeded, name, onEndEditing}: Props) => {
         onBlur={() => setFocused(false)}
         onEndEditing={(e) => onEndEditing(e.nativeEvent.text, name)}
       />
-      <View style={{width: '5%'}} />
+
     </View>
   );
 };
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   textInput: {
-    width: '90%',
+    width: '100%',
     borderBottomWidth: 2,
     fontFamily: 'sd_gothic_m',
   },

@@ -12,3 +12,5 @@ exports.imgMarketActive = require('./market_active.png');
 exports.imgMarketInactive = require('./market_inactive.png');
 exports.imgMoreActive = require('./more_active.png');
 exports.imgMoreInactive = require('./more_inactive.png');
+
+exports.imgChecked = require('./icon_checked.png');

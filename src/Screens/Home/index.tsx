@@ -5,6 +5,8 @@ import mainScreen from './mainScreen';
 import selectMakingWayScreen from './Make/selectMakingWayScreen';
 import inputDataScreen from './Make/inputDataScreen';
 import selectMatLayoutScreen from './Make/selectMatLayoutScreen';
+import selectBackgroundScreen from './Make/selectBackgroundScreen';
+import detailScreen from './Make/detailScreen';
 import tradeCode from './TradeCode';
 import createCode from './TradeCode/createCode';
 import enterCode from './TradeCode/enterCode';
@@ -27,11 +29,24 @@ const HomeStack = () => {
       <Stack.Screen
         name="InputData"
         component={inputDataScreen}
-        // options={{headerShown: false}}
+        options={{title: '명함 제작'}}
       />
       <Stack.Screen
         name="SelectMatLayout"
         component={selectMatLayoutScreen}
+        options={{title: '레이아웃 선택'}}
+        // options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="SelectBackground"
+        component={selectBackgroundScreen}
+        options={{title: '배경 선택'}}
+        // options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Detail"
+        component={detailScreen}
+        options={{title: '세부 설정'}}
         // options={{headerShown: false}}
       />
       <Stack.Screen

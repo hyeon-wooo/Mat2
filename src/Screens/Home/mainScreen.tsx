@@ -1,7 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import S from 'styled-components';
+import { useIsFocused } from '@react-navigation/native';
+import S from 'styled-components/native';
 import {Dimensions, StyleSheet, View, Text, Image} from 'react-native';
 import Swiper from 'react-native-swiper';
+import ImagePicker from 'react-native-image-picker';
 
 import Card from '~/components/Card';
 import MakeCard from '~/components/MakeCard';
@@ -119,25 +121,46 @@ const data = {
   valueComNum: '031-467-1234',
 };
 
-const db = SQLite.openDatabase(
-  {
-    name: 'mat.db',
-    location: 'Library',
-    createFromLocation: 1,
-  },
-  () => {
-    console.log('open success');
-  },
-  (error) => {
-    console.log('open fail', error);
-  },
-);
+const getMyCards = () => new Promise((resolve, reject)=>{
+  const db = SQLite.openDatabase(
+    {
+      name: 'mat.db',
+      location: 'Library',
+      createFromLocation: 1,
+    },
+    () => {
+      console.log('open success');
+    },
+    (error) => {
+      console.log('open fail', error);
+    },
+  );
 
-const Cards = (cardData) => {
-  let cards = cardData.map((data, key) => (
+  let temp = new Array()
+  db.transaction(
+    (tx) => {
+      tx.executeSql('select * from myCard', [], (tx, result) => {
+        console.log('#transaction success# ', result.rows);
+        for (let i = 0; i < result.rows.length; i++) {
+          const item = result.rows.item(i).fullData;
+          temp.push(JSON.parse(item));
+        }
+        resolve(temp)
+      });
+    },
+    (err) => {console.log(err);reject(err)}
+  );
+})
+  
+
+const Cards = (cardData:any) => {
+  let cards = cardData.map((data:object, key:any) => (
     <View key={key}>
       <Text style={styles.nameOfCard}>명함 이름이 들어갈 자리</Text>
+      <View style={{alignItems: 'center'}}>
+
       <Card parentWidth={width} data={data} />
+      </View>
     </View>
   ));
   // cards.push(
@@ -155,35 +178,43 @@ const Cards = (cardData) => {
 };
 
 interface Props {
-  navigation: object;
+  route: any;
+  navigation: any;
 }
 
-const mainScreen = ({navigation}: Props) => {
+const mainScreen = ({route, navigation}: Props) => {
   const [cardData, setCardData] = useState([]);
+  const focused = useIsFocused();
+
+
+  // useEffect(() => {
+  //   // setCardData(getMyCards())
+  //   getMyCards().then((data:any) => setCardData(data))
+  // }, [])
+  
   useEffect(() => {
-    // console.log('#useEffect#');
-    db.transaction(
-      (tx) => {
-        tx.executeSql('select * from myCard', [], (tx, result) => {
-          // console.log('#transaction success# ', result.rows);
-          let temp = [];
-          for (let i = 0; i < result.rows.length; i++) {
-            const item = result.rows.item(i).fullData;
-            temp.push(JSON.parse(item));
-          }
-          setCardData(temp);
-        });
-      },
-      (err) => console.log(err),
-    );
-  }, []);
-  // console.log('#cardData#', cardData);
+    getMyCards().then((data:any) => setCardData(data))
+  }, [focused])
 
   return (
     <Body>
       <EmptyView1 />
       <SwiperContainer style={styles.swiperContainer}>
-        <Swiper>{Cards(cardData)}</Swiper>
+        <Swiper key={cardData.length}>{Cards(cardData)}</Swiper>
+        {/* <Swiper>
+          {cardData.map((data:object, key:any) => (
+    <View key={key}>
+      <Text style={styles.nameOfCard}>명함 이름이 들어갈 자리</Text>
+      <View style={{alignItems: 'center'}}>
+
+      <Card parentWidth={width} data={data} />
+      </View>
+    </View>
+  )).push( (<View key={100}>
+    <MakeCard parentWidth={width} />
+  </View>) )}
+  
+        </Swiper> */}
       </SwiperContainer>
       <EmptyView2 />
       <TradeContainer>
@@ -216,6 +247,7 @@ const mainScreen = ({navigation}: Props) => {
 const styles = StyleSheet.create({
   swiperContainer: {
     // height: '50%',
+    alignItems: 'center'
   },
   myText: {
     fontSize: 24,

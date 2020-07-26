@@ -5,8 +5,19 @@ import LayoutCard from '~/components/LayoutCard';
 import Header from '~/components/MakeHeader';
 import {imgChecked} from '~/Assets/Images';
 
+const backgroundSet = [
+  {
+    isColor: true,
+    color: '#333333',
+  },
+  {
+    isColor: true,
+    color: '#cdcdcd',
+  }
+]
+
 const layoutData = require('~/Assets/layoutCards');
-// console.log('## layoutData ##', layoutData)
+// layoutData가 아니라 배경데이터를 가져오고, 각 배경데이터 + route.params를 LayoutCard에 접합
 const deviceWidth = Dimensions.get('window').width
 
 const Container = S.ScrollView`
@@ -23,22 +34,16 @@ const parentWidth = Dimensions.get('window').width
 const cardWidth = parentWidth * (8 / 10);
 const cardHeight = cardWidth * (9 / 16);
 
-const SelectMatLayoutScreen = ({route, navigation}: Props) => {
-  // const valueLogo = route.params.valueLogo
-  // layoutData.valueLogo = valueLogo
-  layoutData.map((data:any) => {
-    for (const [key, value] of Object.entries(route.params)) {
-      data.value[key] = value
-    }
-  })
-  // console.log('## layout ##', layoutData)
-  // const [valueLogo, ...extra] = route.params
-  // console.log('####', route.params)
-  console.log('#hi#')
-  // console.log(route.params)
-  const [selected, setSelected] = useState(0)
+const SelectBackgroundScreen = ({route, navigation}: Props) => {
+  const [selected, setSelected] = useState(null)
 
-  
+  const backgroundData = backgroundSet.map((v, i) => {
+    let result = JSON.parse(JSON.stringify(route.params))
+    result.value.background = v
+    result.id = i
+    return result
+  })
+
   return (
     
     <View style={styles.container}>
@@ -47,7 +52,7 @@ const SelectMatLayoutScreen = ({route, navigation}: Props) => {
       </View>
       <View style={styles.scrollContainer} >
         <ScrollView>
-          {layoutData.map((data:any) => (
+          {backgroundData.map((data:any) => (
             <View key={data.id} style={[styles.cardContainer,
               selected===data.id? styles.selected : {}]}
               onTouchEnd={() => setSelected(data.id)}>
@@ -56,19 +61,19 @@ const SelectMatLayoutScreen = ({route, navigation}: Props) => {
             </View>
             )
           )}
-          
           <View style={styles.btnConatiner}>
             <TouchableOpacity
               style={styles.btnNext}
-              onPress={() => {
-                if (selected !== 0)
-                  navigation.navigate('SelectBackground', layoutData.filter((data:any) => data.id === selected)[0])
-                }}>
+              onPress={() => navigation.navigate('Detail', backgroundData.filter(v => v.id === selected)[0])}>
               <Text style={styles.btnText}>다음</Text>
             </TouchableOpacity>
           </View>
         </ScrollView>
       </View>
+      
+      {/* <View style={[styles.item1, selected===1? styles.selected: {}]} onTouchStart={() => setSelected(1)}></View>
+      <View style={[styles.item1, selected===2? styles.selected: {}]} onTouchStart={() => setSelected(2)}></View>
+      <View style={[styles.item1, selected===3? styles.selected: {}]} onTouchStart={() => setSelected(3)}></View> */}
     </View>
   );
 };
@@ -134,4 +139,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default SelectMatLayoutScreen;
+export default SelectBackgroundScreen;
