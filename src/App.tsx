@@ -1,13 +1,12 @@
 import 'react-native-gesture-handler';
-
 import React from 'react';
 import {Image} from 'react-native';
-
-import {NavigationContainer, useNavigation} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {NavigationContainer, useNavigation} from '@react-navigation/native';
 import Encrypto from 'react-native-vector-icons/Entypo';
 import HomeStack from '~/Screens/Home';
 import Settings from '~/Screens/Settings';
+import Shop from '~/Screens/Shop';
 
 import {
   imgMainActive,
@@ -61,8 +60,8 @@ const BottomTab = () => {
         }}
       />
       <Tabs.Screen
-        name="Settings2"
-        component={Settings}
+        name="Shop"
+        component={Shop}
         options={{
           title: '템플릿 마켓',
           tabBarIcon: ({focused}) => {
@@ -73,6 +72,7 @@ const BottomTab = () => {
               />
             );
           },
+          tabBarVisible: false
         }}
       />
       <Tabs.Screen

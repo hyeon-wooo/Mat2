@@ -8,13 +8,18 @@ import {
   TouchableOpacity,
   PermissionsAndroid,
   Button,
-  Image
+  Image,
+  Dimensions
 } from 'react-native';
 import Header from '~/components/MakeHeader';
 import TextInputS from '~/components/TextInputS';
 import ImagePicker from 'react-native-image-picker';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {PERMISSIONS, RESULTS, request} from 'react-native-permissions';
+import {header1, loadLogo} from '~/Assets/Images';
+
+
+const deviceWidth = Dimensions.get('window').width
 
 const requestPermission = async (data:any, setIsImg:any, isImg:number, addData:any) => {
   await request(PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE)
@@ -64,10 +69,8 @@ const InputData = ({navigation}: Props) => {
   return (
     <View style={styles.body}>
       <View style={styles.header}>
-        <Header current={1} finish={{}}/>
-        {/* <Text style={styles.processDescription}>
-          * 명함에 들어갈 정보를 입력해주세요
-        </Text> */}
+        {/* <Header current={1} finish={{}}/> */}
+        <Image source={header1} style={{width: deviceWidth, height: '70%', marginTop: '3%'}} />
       </View>
       <View style={styles.scrollViewContainer}>
         <ScrollView>
@@ -132,16 +135,13 @@ const InputData = ({navigation}: Props) => {
             name="valueFax"
           />
 
-          {/* <View>
-            <Button title='Press' onPress={() => {requestPermission(data)}} />
-          </View> */}
-
           <Text style={{fontSize: 15, marginTop: 15, fontWeight: 'bold'}}> * 아래 버튼을 눌러 회사 로고(.png)를 추가해주세요 </Text>
           <View style={styles.logoContainer}>
 
             <TouchableOpacity key={isImg} style={styles.btnOpenLibrary} 
             onPressOut={() => requestPermission(data, setIsImg, isImg, addData)} >
               <AntDesign name='picture' size={70} />
+              {/* <Image source={loadLogo} style={{width:70, height:70}} /> */}
             </TouchableOpacity>
 
             {isImg? 
@@ -155,15 +155,7 @@ const InputData = ({navigation}: Props) => {
           <View style={styles.btnConatiner}>
             <TouchableOpacity
               style={styles.btnNext}
-              onPress={() => {
-                // console.log('## inpudData ##', data)
-                navigation.navigate('SelectMatLayout', data)
-                // if (data.cardName && data.valueName && data.valueEmail && data.valuePhone && data.valueFax && data.valueCompany && data.valueComAddr && data.valueComNum && data.valuePosition && data.valueTeam ) {
-                // }
-                // else {
-                //   // Alert modal
-                // }
-                }}>
+              onPress={() => navigation.navigate('SelectMatLayout', data)}>
               <Text style={styles.btnText}>다음</Text>
             </TouchableOpacity>
           </View>
@@ -205,7 +197,6 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     justifyContent: 'center',
     alignItems: 'center',
-    transform: [{rotate: '90deg'}]
   },
   btnText: {
     fontFamily: 'sd_gothic_m',

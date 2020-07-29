@@ -3,7 +3,7 @@ import S from 'styled-components/native';
 import { StyleSheet, View, Dimensions, ScrollView, Image, TouchableOpacity } from 'react-native';
 import LayoutCard from '~/components/LayoutCard';
 import Header from '~/components/MakeHeader';
-import {imgChecked} from '~/Assets/Images';
+import {imgChecked, header2} from '~/Assets/Images';
 
 const layoutData = require('~/Assets/layoutCards');
 // console.log('## layoutData ##', layoutData)
@@ -43,7 +43,8 @@ const SelectMatLayoutScreen = ({route, navigation}: Props) => {
     
     <View style={styles.container}>
       <View style={styles.headerContainer} >
-        <Header current={2} finish={[1]} />
+        {/* <Header current={2} finish={[1]} /> */}
+        <Image source={header2} style={{width: deviceWidth, height: '70%', marginTop: '3%'}} />
       </View>
       <View style={styles.scrollContainer} >
         <ScrollView>

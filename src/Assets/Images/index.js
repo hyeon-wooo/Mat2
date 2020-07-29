@@ -14,3 +14,14 @@ exports.imgMoreActive = require('./more_active.png');
 exports.imgMoreInactive = require('./more_inactive.png');
 
 exports.imgChecked = require('./icon_checked.png');
+exports.imgUnchecked = require('./icon_unchecked.png');
+
+exports.loadLogo = require('./loadLogo.png');
+exports.header1 = require('./header1.png');
+exports.header2 = require('./header2.png');
+exports.header3 = require('./header3.png');
+exports.templateHeader1 = require('./templateHeader1.png');
+exports.templateHeader2 = require('./templateHeader2.png');
+exports.plusCard = require('./plusCard.png');
+
+exports.descriptionStep2 = require('./description_step2.png');
