@@ -7,6 +7,7 @@ import Encrypto from 'react-native-vector-icons/Entypo';
 import HomeStack from '~/Screens/Home';
 import Settings from '~/Screens/Settings';
 import Shop from '~/Screens/Shop';
+import Wallet from '~/Screens/Wallet';
 
 import {
   imgMainActive,
@@ -45,10 +46,9 @@ const BottomTab = () => {
         }}
       />
       <Tabs.Screen
-        name="Settings1"
-        component={Settings}
+        name="Wallet"
+        component={Wallet}
         options={{
-          title: '명함첩',
           tabBarIcon: ({focused}) => {
             return (
               <Image
@@ -63,7 +63,6 @@ const BottomTab = () => {
         name="Shop"
         component={Shop}
         options={{
-          title: '템플릿 마켓',
           tabBarIcon: ({focused}) => {
             return (
               <Image

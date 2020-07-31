@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { StyleSheet, View, Text, Dimensions, ScrollView, Image, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, Dimensions, ScrollView, Image, TouchableOpacity, NavigatorIOS } from 'react-native';
 
 import {templateHeader2, descriptionStep2} from '~/Assets/Images';
 import CheckableLabel from '~/components/CheckableLabel';
@@ -14,12 +14,6 @@ interface Props {
 // const parentWidth = Dimensions.get('window').width
 // const cardWidth = parentWidth * (8 / 10);
 // const cardHeight = cardWidth * (9 / 16);
-
-const changeState = (setState:any, currentState:any, value:string) => {
-    const idx = currentState.indexOf('name')
-    idx === -1? currentState.push('name') : currentState.splice(idx, 1)
-    setState(currentState)
-}
 
 const Step2Screen = ({route, navigation}: Props) => {
     let checkList = new Array()  
@@ -48,7 +42,7 @@ const Step2Screen = ({route, navigation}: Props) => {
           <View style={styles.btnConatiner}>
             <TouchableOpacity
               style={styles.btnNext}
-              onPressOut={() => {console.log('#checked#', checkList)}}>
+              onPressOut={() => navigation.navigate('UploadStep3', checkList)}>
               <Text style={styles.btnText}>다음</Text>
             </TouchableOpacity>
           </View>

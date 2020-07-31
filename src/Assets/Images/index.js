@@ -25,3 +25,13 @@ exports.templateHeader2 = require('./templateHeader2.png');
 exports.plusCard = require('./plusCard.png');
 
 exports.descriptionStep2 = require('./description_step2.png');
+
+exports.imgUploadTemplate = require('./upload_template.png');
+exports.imgUploadTemplateActive = require('./upload_template_active.png');
+
+exports.imgSearch = require('./search.png');
+exports.imgArrowBack = require('./arrow_back.png');
+
+exports.imgArrowDown = require('./arrow_down.png');
+exports.imgPencil = require('./pencil.png');
+exports.imgFilter = require('./filter.png');

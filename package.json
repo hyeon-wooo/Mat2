@@ -23,6 +23,7 @@
     "@react-navigation/stack": "^5.7.0",
     "@types/react-native-vector-icons": "^6.4.5",
     "@types/styled-components": "^5.1.1",
+    "accordion-collapse-react-native": "^0.3.1",
     "native-base": "^2.13.12",
     "react": "16.13.1",
     "react-native": "0.63.0",
