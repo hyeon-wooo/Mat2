@@ -52,22 +52,34 @@ const HomeStack = () => {
       <Stack.Screen
         name="TradeCode"
         component={tradeCode}
-        // options={{headerShown: false}}
+        options={{
+          title: '명함교환',
+          headerTitleStyle: {fontFamily: 'sd_gothic_b'}
+        }}
       />
       <Stack.Screen
         name="TradeQR"
         component={tradeQR}
-        // options={{headerShown: false}}
+          options={{
+            title: '명함교환'
+          }}
       />
       <Stack.Screen
         name="CreateCode"
         component={createCode}
         // options={{headerShown: false}}
+        options={{
+          title: '교환번호 생성',
+          headerTitleStyle: {fontFamily: 'sd_gothic_b'}  
+        }}
       />
       <Stack.Screen
         name="EnterCode"
         component={enterCode}
-        // options={{headerShown: false}}
+        options={{
+          title: '교환번호 입력',
+          headerTitleStyle: {fontFamily: 'sd_gothic_b'}  
+        }}
       />
     </Stack.Navigator>
   );

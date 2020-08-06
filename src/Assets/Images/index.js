@@ -35,3 +35,19 @@ exports.imgArrowBack = require('./arrow_back.png');
 exports.imgArrowDown = require('./arrow_down.png');
 exports.imgPencil = require('./pencil.png');
 exports.imgFilter = require('./filter.png');
+
+exports.imgPencil2 = require('./pencil2.png');
+exports.imgDelete = require('./icon_delete.png');
+
+exports.imgPlusActive = require('./icon_plus_active.png')
+exports.imgPeople = require('./icon_people.png');
+exports.modalText1 = require('./modalText1.png');
+
+exports.imgCreatePin = require('./create_pin.png');
+exports.imgInputPin = require('./input_pin.png');
+exports.imgCopy = require('./icon_copy.png');
+exports.takeQrActive = require('./take_qr_active.png');
+exports.takeQrInactive = require('./take_qr_inactive.png');
+exports.imgBack = require('./icon_back.png');
+exports.btnOk = require('./btnOk.png');
+exports.imgMakeCard = require('./make_card.png');

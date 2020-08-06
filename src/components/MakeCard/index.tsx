@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, StyleSheet, Image} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import { imgMakeCard } from '~/Assets/Images';
 
 interface Props {
   parentWidth: number;
@@ -9,7 +10,7 @@ interface Props {
 const Card = ({parentWidth}: Props) => {
   const navigation = useNavigation();
 
-  const cardWidth = parentWidth * (8 / 10);
+  const cardWidth = parentWidth * (9 / 10);
   const cardHeight = cardWidth * (9 / 16);
 
   return (
@@ -19,17 +20,18 @@ const Card = ({parentWidth}: Props) => {
         {width: cardWidth, height: cardHeight, elevation: 5},
       ]}
       onTouchEnd={() => navigation.navigate('Make')}>
-      <Image
+      {/* <Image
         source={require('~/Assets/Images/btnAdd.png')}
         style={{width: 30, height: 30}}
-      />
+      /> */}
+      <Image source={imgMakeCard} style={{width: cardWidth, height: cardHeight}} />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   back: {
-    left: '10%',
+    left: '5%',
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#aaa',
