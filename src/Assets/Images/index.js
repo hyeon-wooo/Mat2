@@ -51,3 +51,6 @@ exports.takeQrInactive = require('./take_qr_inactive.png');
 exports.imgBack = require('./icon_back.png');
 exports.btnOk = require('./btnOk.png');
 exports.imgMakeCard = require('./make_card.png');
+
+exports.myQrActive = require('./my_qr_active.png');
+exports.myQrInactive = require('./my_qr_inactive.png');

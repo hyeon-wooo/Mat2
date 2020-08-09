@@ -1,103 +1,96 @@
-import 'react-native-gesture-handler';
 import React from 'react';
-import {Image} from 'react-native';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+
 import {NavigationContainer, useNavigation} from '@react-navigation/native';
-import Encrypto from 'react-native-vector-icons/Entypo';
-import HomeStack from '~/Screens/Home';
-import Settings from '~/Screens/Settings';
-import Shop from '~/Screens/Shop';
-import Wallet from '~/Screens/Wallet';
+import {createStackNavigator} from '@react-navigation/stack';
+import HomeTabs from './Screens/Home';
+import selectMakingWayScreen from './Screens/Home/Make/selectMakingWayScreen';
+import inputDataScreen from './Screens/Home/Make/inputDataScreen';
+import selectMatLayoutScreen from './Screens/Home/Make/selectMatLayoutScreen';
+import selectBackgroundScreen from './Screens/Home/Make/selectBackgroundScreen';
+import detailScreen from './Screens/Home/Make/detailScreen';
+import tradeCode from './Screens/Home/TradeCode';
+import createCode from './Screens/Home/TradeCode/createCode';
+import selectCardToSend from './Screens/Home/TradeCode/selectCardToSendScreen';
+import enterCode from './Screens/Home/TradeCode/enterCode';
 
-import {
-  imgMainActive,
-  imgMainInactive,
-  imgMarketActive,
-  imgMarketInactive,
-  imgMoreActive,
-  imgMoreInactive,
-  imgWalletActive,
-  imgWalletInactive,
-} from '~/Assets/Images';
-
-const Tabs = createBottomTabNavigator();
-
-const BottomTab = () => {
+const Stack = createStackNavigator();
+const HomeStack = () => {
   return (
-    <Tabs.Navigator
-      tabBarOptions={{
-        // activeBackgroundColor: 'black',
-        // inactiveBackgroundColor: 'black',
-        showLabel: false,
-      }}>
-      <Tabs.Screen
+    <Stack.Navigator initialRouteName="Home">
+      <Stack.Screen
         name="Home"
-        component={HomeStack}
+        component={HomeTabs}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Make"
+        component={selectMakingWayScreen}
+        // options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="InputData"
+        component={inputDataScreen}
+        options={{title: '명함 제작'}}
+      />
+      <Stack.Screen
+        name="SelectMatLayout"
+        component={selectMatLayoutScreen}
+        options={{title: '레이아웃 선택'}}
+        // options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="SelectBackground"
+        component={selectBackgroundScreen}
+        options={{title: '배경 선택'}}
+        // options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Detail"
+        component={detailScreen}
+        options={{title: '명함 확인'}}
+        // options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="TradeCode"
+        component={tradeCode}
         options={{
-          title: 'Hi Home',
-          tabBarIcon: ({focused}) => {
-            return (
-              <Image
-                source={focused ? imgMainActive : imgMainInactive}
-                style={{width: 25, height: 25}}
-              />
-            );
-          },
+          title: '명함교환',
+          headerTitleStyle: {fontFamily: 'sd_gothic_b'},
         }}
       />
-      <Tabs.Screen
-        name="Wallet"
-        component={Wallet}
+      <Stack.Screen
+        name="CreateCode"
+        component={createCode}
+        // options={{headerShown: false}}
         options={{
-          tabBarIcon: ({focused}) => {
-            return (
-              <Image
-                source={focused ? imgWalletActive : imgWalletInactive}
-                style={{width: 25, height: 25}}
-              />
-            );
-          },
+          title: '교환번호 생성',
+          headerTitleStyle: {fontFamily: 'sd_gothic_b'},
         }}
       />
-      <Tabs.Screen
-        name="Shop"
-        component={Shop}
+      <Stack.Screen
+        name="EnterCode"
+        component={enterCode}
         options={{
-          tabBarIcon: ({focused}) => {
-            return (
-              <Image
-                source={focused ? imgMarketActive : imgMarketInactive}
-                style={{width: 25, height: 25}}
-              />
-            );
-          },
-          tabBarVisible: false
+          title: '교환번호 입력',
+          headerTitleStyle: {fontFamily: 'sd_gothic_b'},
         }}
       />
-      <Tabs.Screen
-        name="Settings3"
-        component={Settings}
+      <Stack.Screen
+        name="SelectCardToSend"
+        component={selectCardToSend}
         options={{
-          title: '더보기',
-          tabBarIcon: ({focused}) => {
-            return (
-              <Encrypto
-                name="dots-three-horizontal"
-                size={25}
-                color={focused ? '#6078EA' : '#CFCFCF'}
-              />
-            );
-          },
+          title: '카드 선택',
+          headerTitleStyle: {fontFamily: 'sd_gothic_b'},
         }}
       />
-    </Tabs.Navigator>
+    </Stack.Navigator>
   );
 };
 
 const App = () => {
   return (
     <NavigationContainer>
-      <BottomTab />
+      <HomeStack />
     </NavigationContainer>
   );
 };

@@ -1,32 +1,19 @@
 import React, {useEffect, useState} from 'react';
-import { useIsFocused } from '@react-navigation/native';
+import {useIsFocused} from '@react-navigation/native';
 import S from 'styled-components/native';
-import {Dimensions, StyleSheet, View, Text, Image} from 'react-native';
+import {
+  Dimensions,
+  StyleSheet,
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
 import Swiper from 'react-native-swiper';
-import ImagePicker from 'react-native-image-picker';
-
+import db from '~/DB';
 import Card from '~/components/Card';
 import MakeCard from '~/components/MakeCard';
-import {btnAdd, imgQr, imgPin} from '~/Assets/Images';
-
-import SQLite from 'react-native-sqlite-storage';
-
-// db.transaction((tx) => {
-//   tx.executeSql(
-//     `CREATE TABLE IF NOT EXISTS myCard(
-//       id integer primary key autoincrement,
-//       valueName varchar(25),
-//       valueCompany varchar(25),
-//       value varchar(25),
-//       valueName varchar(25),
-//       valueName varchar(25),
-//       valueName varchar(25),
-//       valueName varchar(25),
-//       valueName varchar(25),
-//       valueName varchar(25),`
-
-//   )
-// })
+import {imgCreatePin, imgInputPin} from '~/Assets/Images';
 
 const width = Dimensions.get('window').width;
 
@@ -38,13 +25,13 @@ const Body = S.View`
     background-color: 'rgb(255, 255, 255)';
 `;
 const EmptyView1 = S.View`
-  flex: 0.6;
+  flex: 0.4;
 `;
 const EmptyView2 = S.View`
   flex: 0.2;
 `;
 const SwiperContainer = S.View`
-  flex: 1.2;
+  flex: 1.4;
 `;
 const TradeContainer = S.View`
   flex: 1;
@@ -56,110 +43,20 @@ const TradeButtonContainer = S.View`
   flex-direction: row;
   align-items: center;
 `;
-const BtnBox = S.View`
+const BtnBox = S.TouchableOpacity`
   width: 50%;
+  height: 100%;
   align-items: center;
+  justify-content: 'space-evenly';
+  border: 1px solid black;
 `;
 
-const datas = [
-  {
-    backgroundStyle: {backgroundColor: '#555'},
-    nameData: {text: 'hyeonwoo', style: {color: 'blue', left: '10%'}},
-    companyData: {text: 'sungkyul', style: {color: 'red', left: '20%'}},
-    positionData: {text: 'student', style: {color: 'red', left: '20%'}},
-    emailData: {text: 'a@a.a', style: {color: 'red', left: '20%'}},
-    phoneData: {text: '010-1234-1234', style: {color: 'red', left: '20%'}},
-    faxData: {text: 'faxfax', style: {color: 'red', left: '20%'}},
-    comAddrData: {text: 'pyeongtaek', style: {color: 'red', left: '20%'}},
-    comCallData: {text: '031-657-3452', style: {color: 'red', left: '20%'}},
-  },
-  {
-    backgroundStyle: {backgroundColor: '#555'},
-    nameData: {text: 'hyeonwoo', style: {color: 'blue', left: '10%'}},
-    companyData: {text: 'sungkyul', style: {color: 'red', left: '20%'}},
-    positionData: {text: 'student', style: {color: 'red', left: '20%'}},
-    emailData: {text: 'a@a.a', style: {color: 'red', left: '20%'}},
-    phoneData: {text: '010-1234-1234', style: {color: 'red', left: '20%'}},
-    faxData: {text: 'faxfax', style: {color: 'red', left: '20%'}},
-    comAddrData: {text: 'pyeongtaek', style: {color: 'red', left: '20%'}},
-    comCallData: {text: '031-657-3452', style: {color: 'red', left: '20%'}},
-  },
-  {
-    backgroundStyle: {backgroundColor: '#555'},
-    nameData: {text: 'hyeonwoo', style: {color: 'blue', left: '10%'}},
-    companyData: {text: 'sungkyul', style: {color: 'red', left: '20%'}},
-    positionData: {text: 'student', style: {color: 'red', left: '20%'}},
-    emailData: {text: 'a@a.a', style: {color: 'red', left: '20%'}},
-    phoneData: {text: '010-1234-1234', style: {color: 'red', left: '20%'}},
-    faxData: {text: 'faxfax', style: {color: 'red', left: '20%'}},
-    comAddrData: {text: 'pyeongtaek', style: {color: 'red', left: '20%'}},
-    comCallData: {text: '031-657-3452', style: {color: 'red', left: '20%'}},
-  },
-];
-
-const data = {
-  background: {backgroundColor: '#555'},
-  style: {
-    name: {color: 'blue', left: '10%'},
-    email: {color: 'blue', left: '10%'},
-    phone: {color: 'blue', left: '10%'},
-    fax: {color: 'blue', left: '10%'},
-    company: {color: 'blue', left: '10%'},
-    position: {color: 'blue', left: '10%'},
-    team: {color: 'blue', left: '10%'},
-    comAddr: {color: 'blue', left: '10%'},
-    comNum: {color: 'blue', left: '10%'},
-  },
-  valueName: 'hyeonwoo',
-  valueEmail: 'a@a.a',
-  valuePhone: '01012341234',
-  valueFax: 'faxfax',
-  valueCompany: 'sungkyul',
-  valuePosition: 'student',
-  valueTeam: 'miso',
-  valueComAddr: 'Anyang',
-  valueComNum: '031-467-1234',
-};
-
-const getMyCards = () => new Promise((resolve, reject)=>{
-  const db = SQLite.openDatabase(
-    {
-      name: 'mat.db',
-      location: 'Library',
-      createFromLocation: 1,
-    },
-    () => {
-      console.log('open success');
-    },
-    (error) => {
-      console.log('open fail', error);
-    },
-  );
-
-  let temp = new Array()
-  db.transaction(
-    (tx) => {
-      tx.executeSql('select * from myCard', [], (tx, result) => {
-        console.log('#transaction success# ', result.rows);
-        for (let i = 0; i < result.rows.length; i++) {
-          const item = result.rows.item(i).fullData;
-          temp.push(JSON.parse(item));
-        }
-        resolve(temp)
-      });
-    },
-    (err) => {console.log(err);reject(err)}
-  );
-})
-  
-
-const Cards = (cardData:any) => {
-  let cards = cardData.map((data:object, key:any) => (
+const Cards = (cardData: any) => {
+  let cards = cardData.map((data: any, key: any) => (
     <View key={key}>
-      <Text style={styles.nameOfCard}>명함 이름이 들어갈 자리</Text>
+      <Text style={styles.nameOfCard}>{data.value.cardName || ''}</Text>
       <View style={{alignItems: 'center'}}>
-
-      <Card parentWidth={width} data={data} />
+        <Card parentWidth={width} data={data} />
       </View>
     </View>
   ));
@@ -171,7 +68,10 @@ const Cards = (cardData:any) => {
   // );
   cards.push(
     <View key={100}>
-      <MakeCard parentWidth={width} />
+      <Text style={styles.nameOfCard}></Text>
+      <View style={{alignItems: 'center'}}>
+        <MakeCard parentWidth={width} />
+      </View>
     </View>,
   );
   return cards;
@@ -186,58 +86,51 @@ const mainScreen = ({route, navigation}: Props) => {
   const [cardData, setCardData] = useState([]);
   const focused = useIsFocused();
 
-
-  // useEffect(() => {
-  //   // setCardData(getMyCards())
-  //   getMyCards().then((data:any) => setCardData(data))
-  // }, [])
-  
   useEffect(() => {
-    getMyCards().then((data:any) => setCardData(data))
-  }, [focused])
+    if (focused) {
+      db.getMyCards().then((data: any) =>
+        setCardData(data.map((v: any) => JSON.parse(v.fullData))),
+      );
+    }
+  }, [focused]);
 
   return (
     <Body>
       <EmptyView1 />
       <SwiperContainer style={styles.swiperContainer}>
         <Swiper key={cardData.length}>{Cards(cardData)}</Swiper>
-        {/* <Swiper>
-          {cardData.map((data:object, key:any) => (
-    <View key={key}>
-      <Text style={styles.nameOfCard}>명함 이름이 들어갈 자리</Text>
-      <View style={{alignItems: 'center'}}>
-
-      <Card parentWidth={width} data={data} />
-      </View>
-    </View>
-  )).push( (<View key={100}>
-    <MakeCard parentWidth={width} />
-  </View>) )}
-  
-        </Swiper> */}
       </SwiperContainer>
       <EmptyView2 />
+
       <TradeContainer>
         <Text style={styles.myText}>교환하기</Text>
         <TradeButtonContainer>
-          <BtnBox
-            onTouchEnd={() => {
-              navigation.navigate('TradeCode');
+          <TouchableOpacity
+            style={styles.box}
+            onPress={() => {
+              navigation.navigate('SelectCardToSend');
             }}>
-            <Image source={imgPin} style={{width: 100, height: 100}} />
+            <Image
+              source={imgCreatePin}
+              style={{width: 50 * 2.15, height: 50}}
+            />
             <Text style={{fontFamily: 'sd_gothic_m', fontSize: 20}}>
-              교환번호
+              교환번호 생성
             </Text>
-          </BtnBox>
-          <BtnBox
-            onTouchEnd={() => {
-              navigation.navigate('TradeQR');
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.box}
+            onPress={() => {
+              navigation.navigate('EnterCode');
             }}>
-            <Image source={imgQr} style={{width: 100, height: 100}} />
+            <Image
+              source={imgInputPin}
+              style={{width: 50 * 1.95, height: 50}}
+            />
             <Text style={{fontFamily: 'sd_gothic_m', fontSize: 20}}>
-              QR코드
+              교환번호 입력
             </Text>
-          </BtnBox>
+          </TouchableOpacity>
         </TradeButtonContainer>
       </TradeContainer>
     </Body>
@@ -247,7 +140,14 @@ const mainScreen = ({route, navigation}: Props) => {
 const styles = StyleSheet.create({
   swiperContainer: {
     // height: '50%',
-    alignItems: 'center'
+    alignItems: 'center',
+  },
+  box: {
+    width: '50%',
+    height: '70%',
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+    // borderWidth: 1,
   },
   myText: {
     fontSize: 24,
