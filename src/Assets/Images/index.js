@@ -39,7 +39,7 @@ exports.imgFilter = require('./filter.png');
 exports.imgPencil2 = require('./pencil2.png');
 exports.imgDelete = require('./icon_delete.png');
 
-exports.imgPlusActive = require('./icon_plus_active.png')
+exports.imgPlusActive = require('./icon_plus_active.png');
 exports.imgPeople = require('./icon_people.png');
 exports.modalText1 = require('./modalText1.png');
 
@@ -54,3 +54,5 @@ exports.imgMakeCard = require('./make_card.png');
 
 exports.myQrActive = require('./my_qr_active.png');
 exports.myQrInactive = require('./my_qr_inactive.png');
+
+exports.matIcon = require('./mat_icon.png');

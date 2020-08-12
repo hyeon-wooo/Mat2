@@ -1,5 +1,6 @@
 import React from 'react';
 import {View, Text, StyleSheet, Image} from 'react-native';
+import {matIcon} from '~/Assets/Images';
 
 interface Props {
   cardWidth: number;
@@ -10,9 +11,9 @@ interface Props {
 const Card = ({cardWidth, data, rotate}: Props) => {
   const {label, value} = data;
   const background = value.background;
-  // console.log(background)
-  // console.log('## cardWidth ##', value.style.name.fontSize*(cardWidth/100))
-  //   console.log('#value#', data);
+  const cardHeight = cardWidth * (9 / 16);
+  console.log('##', label.style.name, label.labelName);
+
   return (
     <View
       style={[
@@ -20,9 +21,18 @@ const Card = ({cardWidth, data, rotate}: Props) => {
         background.isColor ? {backgroundColor: background.color} : {},
         rotate ? {transform: [{rotate: rotate}]} : {},
       ]}>
-      {value.valueLogo && (
+      <Image
+        source={{
+          uri: !background.isColor
+            ? `data:image/png;base64,${background.backData}`
+            : '',
+        }}
+        style={{width: cardWidth, height: cardHeight}}
+      />
+      {value.style.logo && (
         <Image
-          source={{uri: `data:image/png;base64,${value.valueLogo}`}}
+          //   source={{uri: `data:image/png;base64,${value.valueLogo}`}}
+          source={matIcon}
           style={[
             value.style.logo || {},
             {
@@ -37,7 +47,6 @@ const Card = ({cardWidth, data, rotate}: Props) => {
       {label.style.name && (
         <Text
           style={[
-            styles.labelText,
             label.style.name || {},
             label.style.name.fontSize
               ? {fontSize: label.style.name.fontSize * (cardWidth / 100)}
@@ -47,10 +56,9 @@ const Card = ({cardWidth, data, rotate}: Props) => {
         </Text>
       )}
 
-      {label.labelEmail && (
+      {label.style.email && (
         <Text
           style={[
-            styles.labelText,
             label.style.email || {},
             label.style.email.fontSize
               ? {fontSize: label.style.email.fontSize * (cardWidth / 100)}
@@ -62,7 +70,6 @@ const Card = ({cardWidth, data, rotate}: Props) => {
       {label.style.phone && (
         <Text
           style={[
-            styles.labelText,
             label.style.phone || {},
             label.style.phone.fontSize
               ? {fontSize: label.style.phone.fontSize * (cardWidth / 100)}
@@ -74,7 +81,6 @@ const Card = ({cardWidth, data, rotate}: Props) => {
       {label.style.fax && (
         <Text
           style={[
-            styles.labelText,
             label.style.fax || {},
             label.style.fax.fontSize
               ? {fontSize: label.style.fax.fontSize * (cardWidth / 100)}
@@ -86,7 +92,6 @@ const Card = ({cardWidth, data, rotate}: Props) => {
       {label.style.company && (
         <Text
           style={[
-            styles.labelText,
             label.style.company || {},
             label.style.company.fontSize
               ? {fontSize: label.style.company.fontSize * (cardWidth / 100)}
@@ -98,7 +103,6 @@ const Card = ({cardWidth, data, rotate}: Props) => {
       {label.style.position && (
         <Text
           style={[
-            styles.labelText,
             label.style.position || {},
             label.style.position.fontSize
               ? {fontSize: label.style.position.fontSize * (cardWidth / 100)}
@@ -110,7 +114,6 @@ const Card = ({cardWidth, data, rotate}: Props) => {
       {label.style.team && (
         <Text
           style={[
-            styles.labelText,
             label.style.team || {},
             label.style.team.fontSize
               ? {fontSize: label.style.team.fontSize * (cardWidth / 100)}
@@ -122,7 +125,6 @@ const Card = ({cardWidth, data, rotate}: Props) => {
       {label.style.comAddr && (
         <Text
           style={[
-            styles.labelText,
             label.style.comAddr || {},
             label.style.comAddr.fontSize
               ? {fontSize: label.style.comAddr.fontSize * (cardWidth / 100)}
@@ -134,7 +136,6 @@ const Card = ({cardWidth, data, rotate}: Props) => {
       {label.style.comNum && (
         <Text
           style={[
-            styles.labelText,
             label.style.comNum || {},
             label.style.comNum.fontSize
               ? {fontSize: label.style.comNum.fontSize * (cardWidth / 100)}
@@ -144,7 +145,7 @@ const Card = ({cardWidth, data, rotate}: Props) => {
         </Text>
       )}
 
-      {value.valueName.length > 0 && value.style.name && (
+      {value.style.name && (
         <Text
           style={[
             styles.valueText,
@@ -157,7 +158,7 @@ const Card = ({cardWidth, data, rotate}: Props) => {
         </Text>
       )}
 
-      {value.valueEmail.length > 0 && value.style.email && (
+      {value.style.email && (
         <Text
           style={[
             styles.valueText,
@@ -169,7 +170,7 @@ const Card = ({cardWidth, data, rotate}: Props) => {
           {value.valueEmail}
         </Text>
       )}
-      {value.valuePhone.length > 0 && value.style.phone && (
+      {value.style.phone && (
         <Text
           style={[
             styles.valueText,
@@ -181,7 +182,7 @@ const Card = ({cardWidth, data, rotate}: Props) => {
           {value.valuePhone}
         </Text>
       )}
-      {value.valueFax.length > 0 && value.style.fax && (
+      {value.style.fax && (
         <Text
           style={[
             styles.valueText,
@@ -193,7 +194,7 @@ const Card = ({cardWidth, data, rotate}: Props) => {
           {value.valueFax}
         </Text>
       )}
-      {value.valueCompany.length > 0 && value.style.company && (
+      {value.style.company && (
         <Text
           style={[
             styles.valueText,
@@ -205,7 +206,7 @@ const Card = ({cardWidth, data, rotate}: Props) => {
           {value.valueCompany}
         </Text>
       )}
-      {value.valuePosition.length > 0 && value.style.position && (
+      {value.style.position && (
         <Text
           style={[
             styles.valueText,
@@ -217,7 +218,7 @@ const Card = ({cardWidth, data, rotate}: Props) => {
           {value.valuePosition}
         </Text>
       )}
-      {value.valueTeam.length > 0 && value.style.team && (
+      {value.style.team && (
         <Text
           style={[
             styles.valueText,
@@ -229,20 +230,19 @@ const Card = ({cardWidth, data, rotate}: Props) => {
           {value.valueTeam}
         </Text>
       )}
-      {value.valueComAddr.length > 0 &&
-        value.style.hasOwnProperty('comAddr') && (
-          <Text
-            style={[
-              styles.valueText,
-              value.style.comAddr,
-              value.style.comAddr.fontSize
-                ? {fontSize: value.style.comAddr.fontSize * (cardWidth / 100)}
-                : {},
-            ]}>
-            {value.valueComAddr}
-          </Text>
-        )}
-      {value.valueComNum.lenght > 0 && value.style.comNum && (
+      {value.style.comAddr && (
+        <Text
+          style={[
+            styles.valueText,
+            value.style.comAddr,
+            value.style.comAddr.fontSize
+              ? {fontSize: value.style.comAddr.fontSize * (cardWidth / 100)}
+              : {},
+          ]}>
+          {value.valueComAddr}
+        </Text>
+      )}
+      {value.style.comNum && (
         <Text
           style={[
             styles.valueText,
@@ -264,9 +264,6 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   valueText: {
-    position: 'absolute',
-  },
-  labelText: {
     position: 'absolute',
   },
 });

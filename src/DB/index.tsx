@@ -548,7 +548,6 @@ const getMyCards = () =>
             const item = result.rows.item(i);
             data.push(item);
           }
-          console.log('## getMyCards ## ', data);
           resolve(data);
         });
       },

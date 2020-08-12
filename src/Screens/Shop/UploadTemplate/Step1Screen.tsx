@@ -92,7 +92,7 @@ const Step1 = ({route, navigation}: Props) => {
         <View style={styles.btnConatiner}>
           <TouchableOpacity
             style={styles.btnNext}
-            onPress={() => navigation.navigate('UploadStep2', {backData})}>
+            onPress={() => navigation.push('UploadStep2', {backData})}>
             <Text style={styles.btnText}>다음</Text>
           </TouchableOpacity>
         </View>
