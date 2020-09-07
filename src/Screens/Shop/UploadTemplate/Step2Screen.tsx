@@ -73,7 +73,15 @@ const Step2Screen = ({route, navigation}: Props) => {
             style={styles.card}
             source={{uri: `data:image/png;base64,${backData}`}}></Image>
         </View>
-        <Text style={{top: 10, fontSize: 17, marginLeft: 10}}>이름</Text>
+        <Text
+          style={{
+            top: 10,
+            fontSize: 17,
+            marginLeft: 10,
+            fontFamily: 'sd_gothic_m',
+          }}>
+          이름
+        </Text>
         <Draggable
           x={100}
           y={cardHeight + 10}
@@ -137,7 +145,15 @@ const Step2Screen = ({route, navigation}: Props) => {
           <Text style={styles.test1}>홍길동</Text>
         </Draggable>
 
-        <Text style={{top: 20, fontSize: 17, marginLeft: 10}}>연락처</Text>
+        <Text
+          style={{
+            top: 23,
+            fontSize: 17,
+            marginLeft: 10,
+            fontFamily: 'sd_gothic_m',
+          }}>
+          연락처
+        </Text>
         <Draggable
           x={100}
           y={cardHeight + 43}
@@ -201,7 +217,15 @@ const Step2Screen = ({route, navigation}: Props) => {
           <Text style={styles.test1}>010-0000-0000</Text>
         </Draggable>
 
-        <Text style={{top: 30, fontSize: 17, marginLeft: 10}}>이메일</Text>
+        <Text
+          style={{
+            top: 33,
+            fontSize: 17,
+            marginLeft: 10,
+            fontFamily: 'sd_gothic_m',
+          }}>
+          이메일
+        </Text>
         <Draggable
           x={100}
           y={cardHeight + 76}
@@ -265,7 +289,15 @@ const Step2Screen = ({route, navigation}: Props) => {
           <Text style={styles.test1}>email@mat.com</Text>
         </Draggable>
 
-        <Text style={{top: 40, fontSize: 17, marginLeft: 10}}>회사명</Text>
+        <Text
+          style={{
+            top: 45,
+            fontSize: 17,
+            marginLeft: 10,
+            fontFamily: 'sd_gothic_m',
+          }}>
+          회사명
+        </Text>
         <Draggable
           x={100}
           y={cardHeight + 109}
@@ -329,7 +361,15 @@ const Step2Screen = ({route, navigation}: Props) => {
           <Text style={styles.test1}>Mat Company</Text>
         </Draggable>
 
-        <Text style={{top: 50, fontSize: 17, marginLeft: 10}}>부서</Text>
+        <Text
+          style={{
+            top: 58,
+            fontSize: 17,
+            marginLeft: 10,
+            fontFamily: 'sd_gothic_m',
+          }}>
+          부서
+        </Text>
         <Draggable
           x={100}
           y={cardHeight + 142}
@@ -395,9 +435,10 @@ const Step2Screen = ({route, navigation}: Props) => {
 
         <Text
           style={{
-            top: 60,
+            top: 70,
             fontSize: 17,
             marginLeft: 10,
+            fontFamily: 'sd_gothic_m',
           }}>
           직책
         </Text>
@@ -466,9 +507,10 @@ const Step2Screen = ({route, navigation}: Props) => {
 
         <Text
           style={{
-            top: 70,
+            top: 82,
             fontSize: 17,
             marginLeft: 10,
+            fontFamily: 'sd_gothic_m',
           }}>
           회사 번호
         </Text>
@@ -537,9 +579,10 @@ const Step2Screen = ({route, navigation}: Props) => {
 
         <Text
           style={{
-            top: 80,
+            top: 92,
             fontSize: 17,
             marginLeft: 10,
+            fontFamily: 'sd_gothic_m',
           }}>
           팩스
         </Text>
@@ -608,9 +651,10 @@ const Step2Screen = ({route, navigation}: Props) => {
 
         <Text
           style={{
-            top: 90,
+            top: 105,
             fontSize: 17,
             marginLeft: 10,
+            fontFamily: 'sd_gothic_m',
           }}>
           회사 주소
         </Text>
@@ -681,9 +725,10 @@ const Step2Screen = ({route, navigation}: Props) => {
 
         <Text
           style={{
-            top: 130,
+            top: 150,
             fontSize: 17,
             marginLeft: 10,
+            fontFamily: 'sd_gothic_m',
           }}>
           회사 로고
         </Text>
@@ -748,7 +793,8 @@ const styles = StyleSheet.create({
     // fontSize: 13,
     fontSize: 4 * (cardWidth / 100),
     padding: 3,
-    borderColor: '#7D7D7D',
+    borderColor: '#6078EA',
+    borderRadius: 4,
     fontFamily: 'sd_gothic_m',
   },
   box: {

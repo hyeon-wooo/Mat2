@@ -627,7 +627,337 @@ const addCardToWallet = (
     resolve(true);
   });
 
+const getMyTemplate = () =>
+  new Promise((resolve, reject) => {
+    const db = SQLite.openDatabase(
+      {
+        name: 'mat.db',
+        location: 'Library',
+        createFromLocation: 1,
+      },
+      () => {
+        console.log('open success');
+      },
+      (error) => {
+        console.log('open fail', error);
+      },
+    );
+
+    const sql = 'select * from myTemplate';
+    let data = new Array();
+    db.transaction(
+      (tx) => {
+        tx.executeSql(sql, [], (tx, result) => {
+          console.log(`#transaction : SELECT myTemplate# `, result.rows.length);
+          console.log('# getMyTemplate - item #', result.rows.raw());
+          for (let i = 0; i < result.rows.length; i++) {
+            // const item = result.rows.item(i);
+            data.push(result.rows.item(i));
+          }
+          resolve(data);
+        });
+      },
+      (err) => {
+        console.log(err);
+        reject(err);
+      },
+    );
+  });
+
+const getMyInfo = () =>
+  new Promise((resolve, reject) => {
+    const db = SQLite.openDatabase(
+      {
+        name: 'mat.db',
+        location: 'Library',
+        createFromLocation: 1,
+      },
+      () => {
+        console.log('open success');
+      },
+      (error) => {
+        console.log('open fail', error);
+      },
+    );
+
+    let data = new Array();
+    db.transaction(
+      (tx) => {
+        tx.executeSql(`select * from userData`, [], (tx, result) => {
+          console.log(`#transactio : SELECT userData# `, result.rows.length);
+
+          resolve(result.rows.item(0) || {});
+        });
+      },
+      (err) => {
+        console.log(err);
+        reject(err);
+      },
+    );
+  });
+
+const setMyInfo = (
+  idOnServer: number,
+  token: string,
+  point: number,
+  name: string,
+  uid: string,
+) =>
+  new Promise((resolve, reject) => {
+    const db = SQLite.openDatabase(
+      {
+        name: 'mat.db',
+        location: 'Library',
+        createFromLocation: 1,
+      },
+      () => {
+        console.log('open success');
+      },
+      (error) => {
+        console.log('open fail', error);
+      },
+    );
+
+    db.transaction(
+      (tx) => {
+        tx.executeSql(
+          `insert into userData(idOnServer, token, myPoint, myName, myId) values(?, ?, ?, ?, ?)`,
+          [idOnServer, token, point, name, uid],
+          (tx, result) => {
+            console.log(`#transactio : SELECT userData# `, result.rows.length);
+            resolve(true);
+          },
+        );
+      },
+      (err) => {
+        console.log(err);
+        reject(err);
+      },
+    );
+  });
+
+const removeMyInfo = () =>
+  new Promise((resolve, reject) => {
+    const db = SQLite.openDatabase(
+      {
+        name: 'mat.db',
+        location: 'Library',
+        createFromLocation: 1,
+      },
+      () => {
+        console.log('open success');
+      },
+      (error) => {
+        console.log('open fail', error);
+      },
+    );
+
+    db.transaction(
+      (tx) => {
+        tx.executeSql(`delete from userData`, [], (tx, result) => {
+          console.log(`#transactio : SELECT userData# `, result.rows.length);
+          resolve(true);
+        });
+      },
+      (err) => {
+        console.log(err);
+        reject(err);
+      },
+    );
+  });
+
+const updateMyPoint = (idOnServer: number, newPoint: number) =>
+  new Promise((resolve, reject) => {
+    const db = SQLite.openDatabase(
+      {
+        name: 'mat.db',
+        location: 'Library',
+        createFromLocation: 1,
+      },
+      () => {
+        console.log('open success');
+      },
+      (error) => {
+        console.log('open fail', error);
+      },
+    );
+
+    db.transaction(
+      (tx) => {
+        tx.executeSql(
+          `update userData set myPoint=${newPoint} where idOnServer = ${idOnServer}`,
+          [],
+          (tx, result) => {
+            console.log(`#transactio : SELECT userData# `, result.rows.length);
+            resolve(true);
+          },
+        );
+      },
+      (err) => {
+        console.log(err);
+        reject(err);
+      },
+    );
+  });
+
+const saveTemplate = (temId: number, fullData: string) =>
+  new Promise((resolve, reject) => {
+    console.log(' # DB.saveTemplate # ', temId, fullData.length);
+    const db = SQLite.openDatabase(
+      {
+        name: 'mat.db',
+        location: 'Library',
+        createFromLocation: 1,
+      },
+      () => {
+        console.log('open success');
+      },
+      (error) => {
+        console.log('open fail', error);
+      },
+    );
+
+    db.transaction(
+      (tx) => {
+        console.log('#1 ', temId, fullData.length);
+        tx.executeSql(
+          `insert into myTemplate(temId, fullData) values(${temId}, '${fullData}')`,
+          [],
+          (tx, result) => {
+            console.log('# SQL result # ', result);
+            resolve(true);
+          },
+        );
+      },
+      (err) => {
+        console.log(err);
+        reject(err);
+      },
+    );
+  });
+
+const saveCard = (fullData: string) =>
+  new Promise((resolve, reject) => {
+    const db = SQLite.openDatabase(
+      {
+        name: 'mat.db',
+        location: 'Library',
+        createFromLocation: 1,
+      },
+      () => {
+        console.log('open success');
+      },
+      (error) => {
+        console.log('open fail', error);
+      },
+    );
+
+    const slicePoint1 = Number(fullData.length / 3);
+    const slicePoint2 = slicePoint1 * 2;
+
+    db.transaction(
+      (tx) => {
+        tx.executeSql(
+          'insert into myCard(fullData, fullData2, fullData3) values(?, ?, ?)',
+          [
+            fullData.substring(0, slicePoint1),
+            fullData.substring(slicePoint1, slicePoint2),
+            fullData.substring(slicePoint2),
+          ],
+          (tx, result) => {
+            // console.log('#transaction success# ', result.rows);
+            console.log('insert success');
+            resolve(result);
+          },
+        );
+      },
+      (err) => {
+        console.log('insert fail');
+        reject(err);
+      },
+    );
+  });
+
+const savePointItem = (item: any, key: string, limitTime: string) =>
+  new Promise((resolve, reject) => {
+    const db = SQLite.openDatabase(
+      {
+        name: 'mat.db',
+        location: 'Library',
+        createFromLocation: 1,
+      },
+      () => {
+        console.log('open success');
+      },
+      (error) => {
+        console.log('open fail', error);
+      },
+    );
+
+    db.transaction(
+      (tx) => {
+        tx.executeSql(
+          'insert into purchasedItem values(null, ?, ?, ?, ?, ?, ?)',
+          [key, item.title, item.shopName, limitTime, item.availableMoney, 0],
+          (tx, result) => {
+            // console.log('#transaction success# ', result.rows);
+            console.log('insert success');
+            resolve(result);
+          },
+        );
+      },
+      (err) => {
+        console.log('insert fail');
+        reject(err);
+      },
+    );
+  });
+
+const getPointItems = () =>
+  new Promise((resolve, reject) => {
+    const db = SQLite.openDatabase(
+      {
+        name: 'mat.db',
+        location: 'Library',
+        createFromLocation: 1,
+      },
+      () => {
+        console.log('open success');
+      },
+      (error) => {
+        console.log('open fail', error);
+      },
+    );
+
+    let data = new Array();
+    db.transaction(
+      (tx) => {
+        tx.executeSql('select * from purchasedItem', [], (tx, result) => {
+          // console.log('#transaction success# ', result.rows);
+          for (let i = 0; i < result.rows.length; i++) {
+            // const item = result.rows.item(i);
+            data.push(result.rows.item(i));
+          }
+          resolve(data);
+        });
+      },
+      (err) => {
+        console.log('insert fail');
+        reject(err);
+      },
+    );
+  });
+
 export default {
+  getPointItems,
+  savePointItem,
+  saveCard,
+  saveTemplate,
+  updateMyPoint,
+  removeMyInfo,
+  getMyInfo,
+  setMyInfo,
+  getMyTemplate,
   addCardToWallet,
   getMyCards,
   getGroups,

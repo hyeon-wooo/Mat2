@@ -33,6 +33,8 @@ exports.imgSearch = require('./search.png');
 exports.imgArrowBack = require('./arrow_back.png');
 
 exports.imgArrowDown = require('./arrow_down.png');
+exports.imgArrowDown2 = require('./arrow_down_2.png');
+exports.imgArrowRight = require('./arrow_right.png');
 exports.imgPencil = require('./pencil.png');
 exports.imgFilter = require('./filter.png');
 
@@ -56,3 +58,25 @@ exports.myQrActive = require('./my_qr_active.png');
 exports.myQrInactive = require('./my_qr_inactive.png');
 
 exports.matIcon = require('./mat_icon.png');
+exports.matLogo = require('./matLogo.png');
+
+exports.emotion = require('./img_emotion.png');
+exports.flower = require('./img_flower.png');
+exports.moreBlack = require('./more_black.png');
+exports.character = require('./character.png');
+exports.simple = require('./category_simple.png');
+
+exports.notice = require('./notice.png');
+exports.personBlack = require('./person.png');
+exports.point = require('./point.png');
+exports.chargePoint = require('./charge_point.png');
+exports.imgInfo = require('./img_info.png');
+
+exports.logoMegacoffee = require('./megacoffee.png');
+
+exports.basket = require('./basket.png');
+exports.defaultMake = require('./defaultMake.png');
+
+exports.loadImg = require('./loadImg.png');
+
+exports.mega20000 = require('./mega_20000.png');

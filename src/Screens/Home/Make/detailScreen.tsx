@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import LayoutCard from '~/components/LayoutCard';
-import SQLite from 'react-native-sqlite-storage';
+import db from '~/DB';
 
 interface Props {
   route: any;
@@ -19,41 +19,6 @@ const deviceHeight = Dimensions.get('window').height;
 
 const cardWidth = deviceWidth * (8 / 10);
 const cardHeight = cardWidth * (9 / 16);
-
-const saveCard = (fullData: string) =>
-  new Promise((resolve, reject) => {
-    const db = SQLite.openDatabase(
-      {
-        name: 'mat.db',
-        location: 'Library',
-        createFromLocation: 1,
-      },
-      () => {
-        console.log('open success');
-      },
-      (error) => {
-        console.log('open fail', error);
-      },
-    );
-
-    db.transaction(
-      (tx) => {
-        tx.executeSql(
-          'insert into myCard(fullData) values(?)',
-          [fullData],
-          (tx, result) => {
-            // console.log('#transaction success# ', result.rows);
-            console.log('insert success');
-            resolve(result);
-          },
-        );
-      },
-      (err) => {
-        console.log('insert fail');
-        reject(err);
-      },
-    );
-  });
 
 const DetailScreen = ({route, navigation}: Props) => {
   const data = route.params;
@@ -67,7 +32,7 @@ const DetailScreen = ({route, navigation}: Props) => {
       <TouchableOpacity
         style={styles.btnFinish}
         onPress={() =>
-          saveCard(JSON.stringify(data)).then(() => navigation.navigate('Home'))
+          db.saveCard(JSON.stringify(data)).then(() => navigation.popToTop())
         }>
         <Text style={styles.btnText}>저장</Text>
       </TouchableOpacity>

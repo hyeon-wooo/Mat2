@@ -13,6 +13,7 @@ import {imgChecked, templateHeader2, imgUnchecked} from '~/Assets/Images';
 import TemplateCard from '~/components/TemplateCard';
 import axios from 'axios';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import db from '~/DB';
 
 const screenWidth = Dimensions.get('screen').width;
 const screenHeight = Dimensions.get('screen').height;
@@ -26,7 +27,7 @@ interface Props {
 
 const Step3Screen = ({route, navigation}: Props) => {
   const temData = route.params.temData;
-  const [selectedCategory, setSelectedCategory] = useState('etc');
+  const [selectedCategory, setSelectedCategory] = useState('기타');
   const [point, setPoint] = useState(0);
   return (
     <KeyboardAwareScrollView keyboardShouldPersistTaps="always">
@@ -140,10 +141,10 @@ const Step3Screen = ({route, navigation}: Props) => {
               <View style={styles.row}>
                 <TouchableOpacity
                   style={{flexDirection: 'row'}}
-                  onPress={() => setSelectedCategory('simple')}>
+                  onPress={() => setSelectedCategory('심플')}>
                   <Image
                     source={
-                      selectedCategory === 'simple' ? imgChecked : imgUnchecked
+                      selectedCategory === '심플' ? imgChecked : imgUnchecked
                     }
                     style={{
                       width: 20,
@@ -158,17 +159,17 @@ const Step3Screen = ({route, navigation}: Props) => {
                       fontFamily: 'sd_gothic_b',
                       marginRight: 5,
                       color:
-                        selectedCategory === 'simple' ? '#6078EA' : '#CFCFCF',
+                        selectedCategory === '심플' ? '#6078EA' : '#CFCFCF',
                     }}>
                     심플
                   </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={{flexDirection: 'row'}}
-                  onPress={() => setSelectedCategory('emotion')}>
+                  onPress={() => setSelectedCategory('감성')}>
                   <Image
                     source={
-                      selectedCategory === 'emotion' ? imgChecked : imgUnchecked
+                      selectedCategory === '감성' ? imgChecked : imgUnchecked
                     }
                     style={{
                       width: 20,
@@ -183,17 +184,17 @@ const Step3Screen = ({route, navigation}: Props) => {
                       fontFamily: 'sd_gothic_b',
                       marginRight: 5,
                       color:
-                        selectedCategory === 'emotion' ? '#6078EA' : '#CFCFCF',
+                        selectedCategory === '감성' ? '#6078EA' : '#CFCFCF',
                     }}>
                     감성
                   </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={{flexDirection: 'row'}}
-                  onPress={() => setSelectedCategory('etc')}>
+                  onPress={() => setSelectedCategory('기타')}>
                   <Image
                     source={
-                      selectedCategory === 'etc' ? imgChecked : imgUnchecked
+                      selectedCategory === '기타' ? imgChecked : imgUnchecked
                     }
                     style={{
                       width: 20,
@@ -206,7 +207,8 @@ const Step3Screen = ({route, navigation}: Props) => {
                     style={{
                       fontSize: 20,
                       fontFamily: 'sd_gothic_b',
-                      color: selectedCategory === 'etc' ? '#6078EA' : '#CFCFCF',
+                      color:
+                        selectedCategory === '기타' ? '#6078EA' : '#CFCFCF',
                     }}>
                     기타
                   </Text>
@@ -215,10 +217,10 @@ const Step3Screen = ({route, navigation}: Props) => {
               <View style={styles.row}>
                 <TouchableOpacity
                   style={{flexDirection: 'row'}}
-                  onPress={() => setSelectedCategory('fancy')}>
+                  onPress={() => setSelectedCategory('화려함')}>
                   <Image
                     source={
-                      selectedCategory === 'fancy' ? imgChecked : imgUnchecked
+                      selectedCategory === '화려함' ? imgChecked : imgUnchecked
                     }
                     style={{
                       width: 20,
@@ -233,19 +235,17 @@ const Step3Screen = ({route, navigation}: Props) => {
                       fontFamily: 'sd_gothic_b',
                       marginRight: 5,
                       color:
-                        selectedCategory === 'fancy' ? '#6078EA' : '#CFCFCF',
+                        selectedCategory === '화려함' ? '#6078EA' : '#CFCFCF',
                     }}>
                     화려함
                   </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={{flexDirection: 'row'}}
-                  onPress={() => setSelectedCategory('character')}>
+                  onPress={() => setSelectedCategory('캐릭터')}>
                   <Image
                     source={
-                      selectedCategory === 'character'
-                        ? imgChecked
-                        : imgUnchecked
+                      selectedCategory === '캐릭터' ? imgChecked : imgUnchecked
                     }
                     style={{
                       width: 20,
@@ -260,9 +260,7 @@ const Step3Screen = ({route, navigation}: Props) => {
                       fontFamily: 'sd_gothic_b',
                       marginRight: 5,
                       color:
-                        selectedCategory === 'character'
-                          ? '#6078EA'
-                          : '#CFCFCF',
+                        selectedCategory === '캐릭터' ? '#6078EA' : '#CFCFCF',
                     }}>
                     캐릭터
                   </Text>
@@ -314,15 +312,24 @@ const Step3Screen = ({route, navigation}: Props) => {
               <TouchableOpacity
                 style={styles.btnNext}
                 onPress={() => {
-                  axios
-                    .post(`https://testmat2.herokuapp.com/template/regist`, {
-                      makerId: 1,
-                      Category: selectedCategory,
-                      Price: point,
-                      fullData: JSON.stringify(temData),
+                  db.getMyInfo()
+                    .then((info: any) => {
+                      return axios.post(
+                        `https://mat-server-1.herokuapp.com/tem/regist`,
+                        {
+                          makerId: info.idOnServer,
+                          category: selectedCategory,
+                          price: point,
+                          fullData: JSON.stringify(temData),
+                        },
+                      );
                     })
+
                     .then((res: any) => {
-                      res.data.code === 0 && navigation.navigate('');
+                      if (res.data.code === 0) {
+                        navigation.popToTop();
+                        navigation.navigate('ShopHome');
+                      }
                     });
                 }}>
                 <Text style={styles.btnText}>다음</Text>

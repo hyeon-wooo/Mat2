@@ -7,14 +7,22 @@ import {
   ScrollView,
   Text,
   TouchableOpacity,
+  LogBox,
 } from 'react-native';
+import {Picker} from '@react-native-community/picker';
 import Draggable from 'react-native-draggable';
 import {imgChecked, templateHeader2, matIcon} from '~/Assets/Images';
 import Slider from '@react-native-community/slider';
+import {ColorWheel} from 'react-native-color-wheel';
+import {toHsv, fromHsv} from 'react-native-color-picker';
 
-const deviceWidth = Dimensions.get('window').width;
-const deviceHeight = Dimensions.get('window').height;
-const cardWidth = deviceWidth * (8 / 10);
+LogBox.ignoreLogs([
+  'Animated: `useNativeDriver` was not specified. This is a required option and must be explicitly set to `true` or `false`',
+]);
+
+const screenWidth = Dimensions.get('screen').width;
+const screenHeight = Dimensions.get('screen').height;
+const cardWidth = screenWidth * (8 / 10);
 const cardHeight = cardWidth * (9 / 16);
 
 interface Props {
@@ -28,7 +36,10 @@ const Step3Screen = ({route, navigation}: Props) => {
   const valueStyle = temData.value.style;
   const [sliderValue, setSliderValue] = useState(4);
   const [currentValue, setCurrentValue] = useState(4);
-  const [selected, setSelected] = useState('valueNameSize');
+  const [currentFont, setCurrentFont] = useState('sd_gothic_m');
+  const [currentColor, setCurrentColor] = useState('#000000');
+  const [selected, setSelected] = useState('valueName');
+
   const [valueNameSize, setValueNameSize] = useState(4);
   const [labelNameSize, setLabelNameSize] = useState(4);
   const [valueEmailSize, setValueEmailSize] = useState(4);
@@ -49,13 +60,109 @@ const Step3Screen = ({route, navigation}: Props) => {
   const [labelComAddrSize, setLabelComAddrSize] = useState(4);
   const [valueLogoSize, setValueLogoSize] = useState(20);
 
-  console.log('###', valueStyle.logo);
+  const [valueNameFont, setValueNameFont] = useState('sd_gothic_m');
+  const [labelNameFont, setLabelNameFont] = useState('sd_gothic_m');
+  const [valueEmailFont, setValueEmailFont] = useState('sd_gothic_m');
+  const [labelEmailFont, setLabelEmailFont] = useState('sd_gothic_m');
+  const [valuePhoneFont, setValuePhoneFont] = useState('sd_gothic_m');
+  const [labelPhoneFont, setLabelPhoneFont] = useState('sd_gothic_m');
+  const [valueCompanyFont, setValueCompanyFont] = useState('sd_gothic_m');
+  const [labelCompanyFont, setLabelCompanyFont] = useState('sd_gothic_m');
+  const [valueTeamFont, setValueTeamFont] = useState('sd_gothic_m');
+  const [labelTeamFont, setLabelTeamFont] = useState('sd_gothic_m');
+  const [valuePositionFont, setValuePositionFont] = useState('sd_gothic_m');
+  const [labelPositionFont, setLabelPositionFont] = useState('sd_gothic_m');
+  const [valueFaxFont, setValueFaxFont] = useState('sd_gothic_m');
+  const [labelFaxFont, setLabelFaxFont] = useState('sd_gothic_m');
+  const [valueComNumFont, setValueComNumFont] = useState('sd_gothic_m');
+  const [labelComNumFont, setLabelComNumFont] = useState('sd_gothic_m');
+  const [valueComAddrFont, setValueComAddrFont] = useState('sd_gothic_m');
+  const [labelComAddrFont, setLabelComAddrFont] = useState('sd_gothic_m');
+
+  const [valueNameColor, setValueNameColor] = useState('#000000');
+  const [labelNameColor, setLabelNameColor] = useState('#000000');
+  const [valueEmailColor, setValueEmailColor] = useState('#000000');
+  const [labelEmailColor, setLabelEmailColor] = useState('#000000');
+  const [valuePhoneColor, setValuePhoneColor] = useState('#000000');
+  const [labelPhoneColor, setLabelPhoneColor] = useState('#000000');
+  const [valueCompanyColor, setValueCompanyColor] = useState('#000000');
+  const [labelCompanyColor, setLabelCompanyColor] = useState('#000000');
+  const [valueTeamColor, setValueTeamColor] = useState('#000000');
+  const [labelTeamColor, setLabelTeamColor] = useState('#000000');
+  const [valuePositionColor, setValuePositionColor] = useState('#000000');
+  const [labelPositionColor, setLabelPositionColor] = useState('#000000');
+  const [valueFaxColor, setValueFaxColor] = useState('#000000');
+  const [labelFaxColor, setLabelFaxColor] = useState('#000000');
+  const [valueComNumColor, setValueComNumColor] = useState('#000000');
+  const [labelComNumColor, setLabelComNumColor] = useState('#000000');
+  const [valueComAddrColor, setValueComAddrColor] = useState('#000000');
+  const [labelComAddrColor, setLabelComAddrColor] = useState('#000000');
+
+  const changeColor = (color: string) => {
+    switch (selected) {
+      case 'valueName':
+        setValueNameColor(color);
+        break;
+      case 'valueEmail':
+        setValueEmailColor(color);
+        break;
+      case 'valuePhone':
+        setValuePhoneColor(color);
+        break;
+      case 'valueCompany':
+        setValueCompanyColor(color);
+        break;
+      case 'valueTeam':
+        setValueTeamColor(color);
+        break;
+      case 'valuePosition':
+        setValuePositionColor(color);
+        break;
+      case 'valueFax':
+        setValueFaxColor(color);
+        break;
+      case 'valueComNum':
+        setValueComNumColor(color);
+        break;
+      case 'valueComAddr':
+        setValueComAddrColor(color);
+        break;
+      case 'labelName':
+        setLabelNameColor(color);
+        break;
+      case 'labelEmail':
+        setLabelEmailColor(color);
+        break;
+      case 'labelPhone':
+        setLabelPhoneColor(color);
+        break;
+      case 'labelCompany':
+        setLabelCompanyColor(color);
+        break;
+      case 'labelFax':
+        setLabelFaxColor(color);
+        break;
+      case 'labelTeam':
+        setLabelTeamColor(color);
+        break;
+      case 'labelPosition':
+        setLabelPositionColor(color);
+        break;
+      case 'labelComNum':
+        setLabelComNumColor(color);
+        break;
+      case 'labelComAddr':
+        setLabelComAddrColor(color);
+        break;
+    }
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
         <Image
           source={templateHeader2}
-          style={{width: deviceWidth, height: '70%', marginTop: '3%'}}
+          style={{width: screenWidth, height: '70%', marginTop: '3%'}}
         />
       </View>
       <View style={styles.content}>
@@ -71,15 +178,22 @@ const Step3Screen = ({route, navigation}: Props) => {
               <TouchableOpacity
                 style={[
                   labelStyle.name,
-                  selected === 'labelNameSize'
+                  selected === 'labelName'
                     ? {borderColor: '#6078EA', borderWidth: 2}
                     : {borderColor: '#7D7D7D', borderWidth: 1},
                 ]}
                 onPress={() => {
-                  setSelected('labelNameSize');
+                  setSelected('labelName');
+                  setCurrentFont(labelNameFont);
                   setCurrentValue(labelNameSize);
+                  setCurrentColor(labelNameColor);
                 }}>
-                <Text style={{fontSize: labelNameSize * (cardWidth / 100)}}>
+                <Text
+                  style={{
+                    fontSize: labelNameSize * (cardWidth / 100),
+                    fontFamily: labelNameFont,
+                    color: labelNameColor,
+                  }}>
                   이름
                 </Text>
               </TouchableOpacity>
@@ -88,15 +202,22 @@ const Step3Screen = ({route, navigation}: Props) => {
               <TouchableOpacity
                 style={[
                   labelStyle.company,
-                  selected === 'labelCompanySize'
+                  selected === 'labelCompany'
                     ? {borderColor: '#6078EA', borderWidth: 2}
                     : {borderColor: '#7D7D7D', borderWidth: 1},
                 ]}
                 onPress={() => {
-                  setSelected('labelCompanySize');
+                  setSelected('labelCompany');
+                  setCurrentFont(labelCompanyFont);
                   setCurrentValue(labelCompanySize);
+                  setCurrentColor(labelCompanyColor);
                 }}>
-                <Text style={{fontSize: labelCompanySize * (cardWidth / 100)}}>
+                <Text
+                  style={{
+                    fontSize: labelCompanySize * (cardWidth / 100),
+                    fontFamily: labelCompanyFont,
+                    color: labelCompanyColor,
+                  }}>
                   회사명
                 </Text>
               </TouchableOpacity>
@@ -105,15 +226,22 @@ const Step3Screen = ({route, navigation}: Props) => {
               <TouchableOpacity
                 style={[
                   labelStyle.email,
-                  selected === 'labelEmailSize'
+                  selected === 'labelEmail'
                     ? {borderColor: '#6078EA', borderWidth: 2}
                     : {borderColor: '#7D7D7D', borderWidth: 1},
                 ]}
                 onPress={() => {
-                  setSelected('labelEmailSize');
+                  setSelected('labelEmail');
+                  setCurrentFont(labelEmailFont);
                   setCurrentValue(labelEmailSize);
+                  setCurrentColor(labelEmailColor);
                 }}>
-                <Text style={{fontSize: labelEmailSize * (cardWidth / 100)}}>
+                <Text
+                  style={{
+                    fontSize: labelEmailSize * (cardWidth / 100),
+                    fontFamily: labelEmailFont,
+                    color: labelEmailColor,
+                  }}>
                   이메일
                 </Text>
               </TouchableOpacity>
@@ -122,15 +250,22 @@ const Step3Screen = ({route, navigation}: Props) => {
               <TouchableOpacity
                 style={[
                   labelStyle.phone,
-                  selected === 'labelPhoneSize'
+                  selected === 'labelPhone'
                     ? {borderColor: '#6078EA', borderWidth: 2}
                     : {borderColor: '#7D7D7D', borderWidth: 1},
                 ]}
                 onPress={() => {
-                  setSelected('labelPhoneSize');
+                  setSelected('labelPhone');
+                  setCurrentFont(labelPhoneFont);
                   setCurrentValue(labelPhoneSize);
+                  setCurrentColor(labelPhoneColor);
                 }}>
-                <Text style={{fontSize: labelPhoneSize * (cardWidth / 100)}}>
+                <Text
+                  style={{
+                    fontSize: labelPhoneSize * (cardWidth / 100),
+                    fontFamily: labelPhoneFont,
+                    color: labelPhoneColor,
+                  }}>
                   연락처
                 </Text>
               </TouchableOpacity>
@@ -139,15 +274,22 @@ const Step3Screen = ({route, navigation}: Props) => {
               <TouchableOpacity
                 style={[
                   labelStyle.team,
-                  selected === 'labelTeamSize'
+                  selected === 'labelTeam'
                     ? {borderColor: '#6078EA', borderWidth: 2}
                     : {borderColor: '#7D7D7D', borderWidth: 1},
                 ]}
                 onPress={() => {
-                  setSelected('labelTeamSize');
+                  setSelected('labelTeam');
+                  setCurrentFont(labelTeamFont);
                   setCurrentValue(labelTeamSize);
+                  setCurrentColor(labelTeamColor);
                 }}>
-                <Text style={{fontSize: labelTeamSize * (cardWidth / 100)}}>
+                <Text
+                  style={{
+                    fontSize: labelTeamSize * (cardWidth / 100),
+                    fontFamily: labelTeamFont,
+                    color: labelTeamColor,
+                  }}>
                   부서
                 </Text>
               </TouchableOpacity>
@@ -156,15 +298,22 @@ const Step3Screen = ({route, navigation}: Props) => {
               <TouchableOpacity
                 style={[
                   labelStyle.position,
-                  selected === 'labelPositionSize'
+                  selected === 'labelPosition'
                     ? {borderColor: '#6078EA', borderWidth: 2}
                     : {borderColor: '#7D7D7D', borderWidth: 1},
                 ]}
                 onPress={() => {
-                  setSelected('labelPositionSize');
+                  setSelected('labelPosition');
+                  setCurrentFont(labelPositionFont);
                   setCurrentValue(labelPositionSize);
+                  setCurrentColor(labelPositionColor);
                 }}>
-                <Text style={{fontSize: labelPositionSize * (cardWidth / 100)}}>
+                <Text
+                  style={{
+                    fontSize: labelPositionSize * (cardWidth / 100),
+                    fontFamily: labelPositionFont,
+                    color: labelPositionColor,
+                  }}>
                   직책
                 </Text>
               </TouchableOpacity>
@@ -173,15 +322,22 @@ const Step3Screen = ({route, navigation}: Props) => {
               <TouchableOpacity
                 style={[
                   labelStyle.fax,
-                  selected === 'labelFaxSize'
+                  selected === 'labelFax'
                     ? {borderColor: '#6078EA', borderWidth: 2}
                     : {borderColor: '#7D7D7D', borderWidth: 1},
                 ]}
                 onPress={() => {
-                  setSelected('labelFaxSize');
+                  setSelected('labelFax');
+                  setCurrentFont(labelFaxFont);
                   setCurrentValue(labelFaxSize);
+                  setCurrentColor(labelFaxColor);
                 }}>
-                <Text style={{fontSize: labelFaxSize * (cardWidth / 100)}}>
+                <Text
+                  style={{
+                    fontSize: labelFaxSize * (cardWidth / 100),
+                    fontFamily: labelFaxFont,
+                    color: labelFaxColor,
+                  }}>
                   Fax
                 </Text>
               </TouchableOpacity>
@@ -190,15 +346,22 @@ const Step3Screen = ({route, navigation}: Props) => {
               <TouchableOpacity
                 style={[
                   labelStyle.comNum,
-                  selected === 'labelComNumSize'
+                  selected === 'labelComNum'
                     ? {borderColor: '#6078EA', borderWidth: 2}
                     : {borderColor: '#7D7D7D', borderWidth: 1},
                 ]}
                 onPress={() => {
-                  setSelected('labelComNumSize');
+                  setSelected('labelComNum');
+                  setCurrentFont(labelComNumFont);
                   setCurrentValue(labelComNumSize);
+                  setCurrentColor(labelComNumColor);
                 }}>
-                <Text style={{fontSize: labelComNumSize * (cardWidth / 100)}}>
+                <Text
+                  style={{
+                    fontSize: labelComNumSize * (cardWidth / 100),
+                    fontFamily: labelComNumFont,
+                    color: labelComNumColor,
+                  }}>
                   회사번호
                 </Text>
               </TouchableOpacity>
@@ -207,15 +370,22 @@ const Step3Screen = ({route, navigation}: Props) => {
               <TouchableOpacity
                 style={[
                   labelStyle.comAddr,
-                  selected === 'labelComAddrSize'
+                  selected === 'labelComAddr'
                     ? {borderColor: '#6078EA', borderWidth: 2}
                     : {borderColor: '#7D7D7D', borderWidth: 1},
                 ]}
                 onPress={() => {
-                  setSelected('labelComADdrSize');
+                  setSelected('labelComAddr');
+                  setCurrentFont(labelComAddrFont);
                   setCurrentValue(labelComAddrSize);
+                  setCurrentColor(labelComAddrColor);
                 }}>
-                <Text style={{fontSize: labelComAddrSize * (cardWidth / 100)}}>
+                <Text
+                  style={{
+                    fontSize: labelComAddrSize * (cardWidth / 100),
+                    fontFamily: labelComAddrFont,
+                    color: labelComAddrColor,
+                  }}>
                   회사주소
                 </Text>
               </TouchableOpacity>
@@ -224,15 +394,22 @@ const Step3Screen = ({route, navigation}: Props) => {
               <TouchableOpacity
                 style={[
                   valueStyle.name,
-                  selected === 'valueNameSize'
+                  selected === 'valueName'
                     ? {borderColor: '#6078EA', borderWidth: 2}
                     : {borderColor: '#7D7D7D', borderWidth: 1},
                 ]}
                 onPress={() => {
-                  setSelected('valueNameSize');
+                  setSelected('valueName');
+                  setCurrentFont(valueNameFont);
                   setCurrentValue(valueNameSize);
+                  setCurrentColor(valueNameColor);
                 }}>
-                <Text style={{fontSize: valueNameSize * (cardWidth / 100)}}>
+                <Text
+                  style={{
+                    fontSize: valueNameSize * (cardWidth / 100),
+                    fontFamily: valueNameFont,
+                    color: valueNameColor,
+                  }}>
                   홍길동
                 </Text>
               </TouchableOpacity>
@@ -241,15 +418,22 @@ const Step3Screen = ({route, navigation}: Props) => {
               <TouchableOpacity
                 style={[
                   valueStyle.email,
-                  selected === 'valueEmailSize'
+                  selected === 'valueEmail'
                     ? {borderColor: '#6078EA', borderWidth: 2}
                     : {borderColor: '#7D7D7D', borderWidth: 1},
                 ]}
                 onPress={() => {
-                  setSelected('valueEmailSize');
+                  setSelected('valueEmail');
+                  setCurrentFont(valueEmailFont);
                   setCurrentValue(valueEmailSize);
+                  setCurrentColor(valueEmailColor);
                 }}>
-                <Text style={{fontSize: valueEmailSize * (cardWidth / 100)}}>
+                <Text
+                  style={{
+                    fontSize: valueEmailSize * (cardWidth / 100),
+                    fontFamily: valueEmailFont,
+                    color: valueEmailColor,
+                  }}>
                   email@mat.com
                 </Text>
               </TouchableOpacity>
@@ -258,15 +442,22 @@ const Step3Screen = ({route, navigation}: Props) => {
               <TouchableOpacity
                 style={[
                   valueStyle.phone,
-                  selected === 'valuePhoneSize'
+                  selected === 'valuePhone'
                     ? {borderColor: '#6078EA', borderWidth: 2}
                     : {borderColor: '#7D7D7D', borderWidth: 1},
                 ]}
                 onPress={() => {
-                  setSelected('valuePhoneSize');
+                  setSelected('valuePhone');
+                  setCurrentFont(valuePhoneFont);
                   setCurrentValue(valuePhoneSize);
+                  setCurrentColor(valuePhoneColor);
                 }}>
-                <Text style={{fontSize: valuePhoneSize * (cardWidth / 100)}}>
+                <Text
+                  style={{
+                    fontSize: valuePhoneSize * (cardWidth / 100),
+                    fontFamily: valuePhoneFont,
+                    color: valuePhoneColor,
+                  }}>
                   010-0000-0000
                 </Text>
               </TouchableOpacity>
@@ -275,15 +466,22 @@ const Step3Screen = ({route, navigation}: Props) => {
               <TouchableOpacity
                 style={[
                   valueStyle.company,
-                  selected === 'valueCompanySize'
+                  selected === 'valueCompany'
                     ? {borderColor: '#6078EA', borderWidth: 2}
                     : {borderColor: '#7D7D7D', borderWidth: 1},
                 ]}
                 onPress={() => {
-                  setSelected('valueCompanySize');
+                  setSelected('valueCompany');
+                  setCurrentFont(valueCompanyFont);
                   setCurrentValue(valueCompanySize);
+                  setCurrentColor(valueCompanyColor);
                 }}>
-                <Text style={{fontSize: valueCompanySize * (cardWidth / 100)}}>
+                <Text
+                  style={{
+                    fontSize: valueCompanySize * (cardWidth / 100),
+                    fontFamily: valueCompanyFont,
+                    color: valueCompanyColor,
+                  }}>
                   Mat Company
                 </Text>
               </TouchableOpacity>
@@ -292,15 +490,22 @@ const Step3Screen = ({route, navigation}: Props) => {
               <TouchableOpacity
                 style={[
                   valueStyle.team,
-                  selected === 'valueTeamSize'
+                  selected === 'valueTeam'
                     ? {borderColor: '#6078EA', borderWidth: 2}
                     : {borderColor: '#7D7D7D', borderWidth: 1},
                 ]}
                 onPress={() => {
-                  setSelected('valueTeamSize');
+                  setSelected('valueTeam');
+                  setCurrentFont(valueTeamFont);
                   setCurrentValue(valueTeamSize);
+                  setCurrentColor(valueTeamColor);
                 }}>
-                <Text style={{fontSize: valueTeamSize * (cardWidth / 100)}}>
+                <Text
+                  style={{
+                    fontSize: valueTeamSize * (cardWidth / 100),
+                    fontFamily: valueTeamFont,
+                    color: valueTeamColor,
+                  }}>
                   기획팀
                 </Text>
               </TouchableOpacity>
@@ -309,15 +514,22 @@ const Step3Screen = ({route, navigation}: Props) => {
               <TouchableOpacity
                 style={[
                   valueStyle.position,
-                  selected === 'valuePositionSize'
+                  selected === 'valuePosition'
                     ? {borderColor: '#6078EA', borderWidth: 2}
                     : {borderColor: '#7D7D7D', borderWidth: 1},
                 ]}
                 onPress={() => {
-                  setSelected('valuePositionSize');
+                  setSelected('valuePosition');
+                  setCurrentFont(valuePositionFont);
                   setCurrentValue(valuePositionSize);
+                  setCurrentColor(valuePositionColor);
                 }}>
-                <Text style={{fontSize: valuePositionSize * (cardWidth / 100)}}>
+                <Text
+                  style={{
+                    fontSize: valuePositionSize * (cardWidth / 100),
+                    fontFamily: valuePositionFont,
+                    color: valuePositionColor,
+                  }}>
                   대리
                 </Text>
               </TouchableOpacity>
@@ -326,15 +538,22 @@ const Step3Screen = ({route, navigation}: Props) => {
               <TouchableOpacity
                 style={[
                   valueStyle.fax,
-                  selected === 'valueFaxSize'
+                  selected === 'valueFax'
                     ? {borderColor: '#6078EA', borderWidth: 2}
                     : {borderColor: '#7D7D7D', borderWidth: 1},
                 ]}
                 onPress={() => {
-                  setSelected('valueFaxSize');
+                  setSelected('valueFax');
+                  setCurrentFont(valueFaxFont);
                   setCurrentValue(valueFaxSize);
+                  setCurrentColor(valueFaxColor);
                 }}>
-                <Text style={{fontSize: valueFaxSize * (cardWidth / 100)}}>
+                <Text
+                  style={{
+                    fontSize: valueFaxSize * (cardWidth / 100),
+                    fontFamily: valueFaxFont,
+                    color: valueFaxColor,
+                  }}>
                   02-000-0000
                 </Text>
               </TouchableOpacity>
@@ -343,15 +562,22 @@ const Step3Screen = ({route, navigation}: Props) => {
               <TouchableOpacity
                 style={[
                   valueStyle.comNum,
-                  selected === 'valueComNumSize'
+                  selected === 'valueComNum'
                     ? {borderColor: '#6078EA', borderWidth: 2}
                     : {borderColor: '#7D7D7D', borderWidth: 1},
                 ]}
                 onPress={() => {
-                  setSelected('valueComNumSize');
+                  setSelected('valueComNum');
+                  setCurrentFont(valueComNumFont);
                   setCurrentValue(valueComNumSize);
+                  setCurrentColor(valueComNumColor);
                 }}>
-                <Text style={{fontSize: valueComNumSize * (cardWidth / 100)}}>
+                <Text
+                  style={{
+                    fontSize: valueComNumSize * (cardWidth / 100),
+                    fontFamily: valueComNumFont,
+                    color: valueComNumColor,
+                  }}>
                   02-0000-0000
                 </Text>
               </TouchableOpacity>
@@ -360,15 +586,22 @@ const Step3Screen = ({route, navigation}: Props) => {
               <TouchableOpacity
                 style={[
                   valueStyle.comAddr,
-                  selected === 'valueComAddrSize'
+                  selected === 'valueComAddr'
                     ? {borderColor: '#6078EA', borderWidth: 2}
                     : {borderColor: '#7D7D7D', borderWidth: 1},
                 ]}
                 onPress={() => {
-                  setSelected('valueComAddrSize');
+                  setSelected('valueComAddr');
+                  setCurrentFont(valueComAddrFont);
                   setCurrentValue(valueComAddrSize);
+                  setCurrentColor(valueComAddrColor);
                 }}>
-                <Text style={{fontSize: valueComAddrSize * (cardWidth / 100)}}>
+                <Text
+                  style={{
+                    fontSize: valueComAddrSize * (cardWidth / 100),
+                    fontFamily: valueComAddrFont,
+                    color: valueComAddrColor,
+                  }}>
                   서울특별시 강남구 00동 00길 MAT타워 204호
                 </Text>
               </TouchableOpacity>
@@ -377,7 +610,7 @@ const Step3Screen = ({route, navigation}: Props) => {
               <TouchableOpacity
                 style={[
                   valueStyle.logo,
-                  selected === 'valueLogoSize'
+                  selected === 'valueLogo'
                     ? {borderColor: '#6078EA', borderWidth: 2}
                     : {borderColor: '#7D7D7D', borderWidth: 1},
                   {
@@ -386,7 +619,7 @@ const Step3Screen = ({route, navigation}: Props) => {
                   },
                 ]}
                 onPress={() => {
-                  setSelected('valueLogoSize');
+                  setSelected('valueLogo');
                   setCurrentValue(valueLogoSize);
                 }}>
                 <Image
@@ -401,135 +634,364 @@ const Step3Screen = ({route, navigation}: Props) => {
           </View>
         </View>
 
-        <View style={styles.emptyView}>
-          {/*Slider with max, min, step and initial value*/}
-          <Slider
-            maximumValue={selected === 'valueLogoSize' ? 60 : 20}
-            minimumValue={0}
-            minimumTrackTintColor="#307ecc"
-            maximumTrackTintColor="#000000"
-            step={0.5}
-            value={currentValue}
-            onValueChange={(v: number) => {
-              setSliderValue(v);
+        <View style={styles.editContainer}>
+          <View style={styles.row}>
+            <Text style={styles.menuText}>폰트</Text>
+            <View style={{borderBottomWidth: 2, borderColor: '#6078EA'}}>
+              <Picker
+                style={{height: 50, width: 200}}
+                // onValueChange={() => }
+                selectedValue={currentFont}
+                onValueChange={(itemValue: any, itemIndex) => {
+                  setCurrentFont(itemValue);
+                  switch (selected) {
+                    case 'valueName':
+                      setValueNameFont(itemValue);
+                      break;
+                    case 'valueEmail':
+                      setValueEmailFont(itemValue);
+                      break;
+                    case 'valuePhone':
+                      setValuePhoneFont(itemValue);
+                      break;
+                    case 'valueCompany':
+                      setValueCompanyFont(itemValue);
+                      break;
+                    case 'valueTeam':
+                      setValueTeamFont(itemValue);
+                      break;
+                    case 'valuePosition':
+                      setValuePositionFont(itemValue);
+                      break;
+                    case 'valueFax':
+                      setValueFaxFont(itemValue);
+                      break;
+                    case 'valueComNum':
+                      setValueComNumFont(itemValue);
+                      break;
+                    case 'valueComAddr':
+                      setValueComAddrFont(itemValue);
+                      break;
+                    case 'labelName':
+                      setLabelNameFont(itemValue);
+                      break;
+                    case 'labelEmail':
+                      setLabelEmailFont(itemValue);
+                      break;
+                    case 'labelPhone':
+                      setLabelPhoneFont(itemValue);
+                      break;
+                    case 'labelCompany':
+                      setLabelCompanyFont(itemValue);
+                      break;
+                    case 'labelFax':
+                      setLabelFaxFont(itemValue);
+                      break;
+                    case 'labelTeam':
+                      setLabelTeamFont(itemValue);
+                      break;
+                    case 'labelPosition':
+                      setLabelPositionFont(itemValue);
+                      break;
+                    case 'labelComNum':
+                      setLabelComNumFont(itemValue);
+                      break;
+                    case 'labelComAddr':
+                      setLabelComAddrFont(itemValue);
+                      break;
+                  }
+                }}>
+                <Picker.Item label="산돌고딕 M" value="sd_gothic_m" />
+                <Picker.Item label="산돌고딕 B" value="sd_gothic_b" />
+              </Picker>
+            </View>
+          </View>
+          <View style={styles.row}>
+            <Text style={styles.menuText}>폰트 크기</Text>
+            <Slider
+              style={styles.slider}
+              thumbTintColor={'#6078EA'}
+              // maximumTrackTintColor={'#7D7D7D'}
+              maximumValue={selected === 'valueLogo' ? 60 : 20}
+              minimumValue={0}
+              minimumTrackTintColor="#307ecc"
+              maximumTrackTintColor="#7D7D7D"
+              step={0.5}
+              value={currentValue}
+              onValueChange={(v: number) => {
+                setSliderValue(v);
+                switch (selected) {
+                  case 'valueName':
+                    setValueNameSize(v);
+                    break;
+                  case 'valueEmail':
+                    setValueEmailSize(v);
+                    break;
+                  case 'valuePhone':
+                    setValuePhoneSize(v);
+                    break;
+                  case 'valueCompany':
+                    setValueCompanySize(v);
+                    break;
+                  case 'valueTeam':
+                    setValueTeamSize(v);
+                    break;
+                  case 'valuePosition':
+                    setValuePositionSize(v);
+                    break;
+                  case 'valueFax':
+                    setValueFaxSize(v);
+                    break;
+                  case 'valueComNum':
+                    setValueComNumSize(v);
+                    break;
+                  case 'valueComAddr':
+                    setValueComAddrSize(v);
+                    break;
+                  case 'valueLogo':
+                    setValueLogoSize(v);
+                    break;
+                  case 'labelName':
+                    setLabelNameSize(v);
+                    break;
+                  case 'labelEmail':
+                    setLabelEmailSize(v);
+                    break;
+                  case 'labelPhone':
+                    setLabelPhoneSize(v);
+                    break;
+                  case 'labelCompany':
+                    setLabelCompanySize(v);
+                    break;
+                  case 'labelFax':
+                    setLabelFaxSize(v);
+                    break;
+                  case 'labelTeam':
+                    setLabelTeamSize(v);
+                    break;
+                  case 'labelPosition':
+                    setLabelPositionSize(v);
+                    break;
+                  case 'labelComNum':
+                    setLabelComNumSize(v);
+                    break;
+                  case 'labelComAddr':
+                    setLabelComAddrSize(v);
+                    break;
+                }
+              }}
+            />
+          </View>
+          <View style={styles.row}>
+            <Text style={styles.menuText}>폰트 컬러</Text>
+            <TouchableOpacity
+              style={{...styles.colorBox, backgroundColor: '#000000'}}
+              onPress={() => {
+                changeColor('#000000');
+              }}
+            />
+            <TouchableOpacity
+              style={{...styles.colorBox, backgroundColor: '#8A00AB'}}
+              onPress={() => {
+                changeColor('#8A00AB');
+              }}
+            />
+            <TouchableOpacity
+              style={{...styles.colorBox, backgroundColor: '#6078EA'}}
+              onPress={() => {
+                changeColor('#6078EA');
+              }}
+            />
+            <TouchableOpacity
+              style={{...styles.colorBox, backgroundColor: '#EA6060'}}
+              onPress={() => {
+                changeColor('#EA6060');
+              }}
+            />
+            <TouchableOpacity
+              style={{...styles.colorBox, backgroundColor: '#17EAD9'}}
+              onPress={() => changeColor('#17EAD9')}
+            />
+            <TouchableOpacity
+              style={{...styles.colorBox, backgroundColor: '#ACBBFF'}}
+              onPress={() => changeColor('#ACBBFF')}
+            />
+          </View>
+          <ColorWheel
+            initialColor="#000000"
+            onColorChange={(color: any) => {
               switch (selected) {
-                case 'valueNameSize':
-                  setValueNameSize(v);
+                case 'valueName':
+                  setValueNameColor(fromHsv(color));
                   break;
-                case 'valueEmailSize':
-                  setValueEmailSize(v);
+                case 'valueEmail':
+                  setValueEmailColor(fromHsv(color));
                   break;
-                case 'valuePhoneSize':
-                  setValuePhoneSize(v);
+                case 'valuePhone':
+                  setValuePhoneColor(fromHsv(color));
                   break;
-                case 'valueCompanySize':
-                  setValueCompanySize(v);
+                case 'valueCompany':
+                  setValueCompanyColor(fromHsv(color));
                   break;
-                case 'valueTeamSize':
-                  setValueTeamSize(v);
+                case 'valueTeam':
+                  setValueTeamColor(fromHsv(color));
                   break;
-                case 'valuePositionSize':
-                  setValuePositionSize(v);
+                case 'valuePosition':
+                  setValuePositionColor(fromHsv(color));
                   break;
-                case 'valueFaxSize':
-                  setValueFaxSize(v);
+                case 'valueFax':
+                  setValueFaxColor(fromHsv(color));
                   break;
-                case 'valueComNumSize':
-                  setValueComNumSize(v);
+                case 'valueComNum':
+                  setValueComNumColor(fromHsv(color));
                   break;
-                case 'valueComAddrSize':
-                  setValueComAddrSize(v);
+                case 'valueComAddr':
+                  setValueComAddrColor(fromHsv(color));
                   break;
-                case 'valueLogoSize':
-                  setValueLogoSize(v);
+                case 'labelName':
+                  setLabelNameColor(fromHsv(color));
                   break;
-                case 'labelNameSize':
-                  setLabelNameSize(v);
+                case 'labelEmail':
+                  setLabelEmailColor(fromHsv(color));
                   break;
-                case 'labelEmailSize':
-                  setLabelEmailSize(v);
+                case 'labelPhone':
+                  setLabelPhoneColor(fromHsv(color));
                   break;
-                case 'labelPhoneSize':
-                  setLabelPhoneSize(v);
+                case 'labelCompany':
+                  setLabelCompanyColor(fromHsv(color));
                   break;
-                case 'labelCompanySize':
-                  setLabelCompanySize(v);
+                case 'labelFax':
+                  setLabelFaxColor(fromHsv(color));
                   break;
-                case 'labelFaxSize':
-                  setLabelFaxSize(v);
+                case 'labelTeam':
+                  setLabelTeamColor(fromHsv(color));
                   break;
-                case 'labelTeamSize':
-                  setLabelTeamSize(v);
+                case 'labelPosition':
+                  setLabelPositionColor(fromHsv(color));
                   break;
-                case 'labelPositionSize':
-                  setLabelPositionSize(v);
+                case 'labelComNum':
+                  setLabelComNumColor(fromHsv(color));
                   break;
-                case 'labelComNumSize':
-                  setLabelComNumSize(v);
-                  break;
-                case 'labelComAddrSize':
-                  setLabelComAddrSize(v);
+                case 'labelComAddr':
+                  setLabelComAddrColor(fromHsv(color));
                   break;
               }
             }}
-            style={{width: 300, height: 40}}
+            style={{width: Dimensions.get('window').width / 2}}
+            thumbStyle={{height: 30, width: 30, borderRadius: 30}}
+            useNativeDriver={false}
           />
-          <View style={styles.footer}>
-            <TouchableOpacity
-              style={styles.btnNext}
-              onPress={() => {
-                let temData2 = JSON.parse(JSON.stringify(temData));
-                if (labelStyle.name)
-                  temData2.label.style.name.fontSize = labelNameSize;
-                if (labelStyle.company)
-                  temData2.label.style.company.fontSize = labelCompanySize;
-                if (labelStyle.email)
-                  temData2.label.style.email.fontSize = labelEmailSize;
-                if (labelStyle.phone)
-                  temData2.label.style.phone.fontSize = labelPhoneSize;
-                if (labelStyle.fax)
-                  temData2.label.style.fax.fontSize = labelFaxSize;
-                if (labelStyle.team)
-                  temData2.label.style.team.fontSize = labelTeamSize;
-                if (labelStyle.position)
-                  temData2.label.style.position.fontSize = labelPositionSize;
-                if (labelStyle.comNum)
-                  temData2.label.style.comNum.fontSize = labelComNumSize;
-                if (labelStyle.comAddr)
-                  temData2.value.style.comAddr.fontSize = labelComAddrSize;
-                if (valueStyle.name)
-                  temData2.value.style.name.fontSize = valueNameSize;
-                if (valueStyle.email)
-                  temData2.value.style.email.fontSize = valueEmailSize;
-                if (valueStyle.phone)
-                  temData2.value.style.phone.fontSize = valuePhoneSize;
-                if (valueStyle.company)
-                  temData2.value.style.company.fontSize = valueCompanySize;
-                if (valueStyle.team)
-                  temData2.value.style.team.fontSize = valueTeamSize;
-                if (valueStyle.position)
-                  temData2.value.style.position.fontSize = valuePositionSize;
-                if (valueStyle.fax)
-                  temData2.value.style.fax.fontSize = valueFaxSize;
-                if (valueStyle.comNum)
-                  temData2.value.style.comNum.fontSize = valueComNumSize;
-                if (valueStyle.comAddr)
-                  temData2.value.style.comAddr.fontSize = valueComAddrSize;
-                if (valueStyle.logo) {
-                  temData2.value.style.logo.width = valueLogoSize;
-                  temData2.value.style.logo.height = valueLogoSize;
-                }
-                navigation.push('UploadStep4', {temData: temData2});
-              }}>
-              <Text style={styles.btnText}>다음</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={{...styles.btnNext, marginHorizontal: 12}}
-              onPress={() => navigation.goBack()}>
-              <Text style={styles.btnText}>이전</Text>
-            </TouchableOpacity>
-          </View>
         </View>
+      </View>
+      <View style={styles.footer}>
+        <TouchableOpacity
+          style={styles.btnNext}
+          onPress={() => {
+            let temData2 = JSON.parse(JSON.stringify(temData));
+            if (labelStyle.name) {
+              temData2.label.style.name.fontFamily = labelNameFont;
+              temData2.label.style.name.fontSize = labelNameSize;
+              temData2.label.style.name.color = labelNameColor;
+            }
+
+            if (labelStyle.company) {
+              temData2.label.style.company.fontFamily = labelCompanyFont;
+              temData2.label.style.company.fontSize = labelCompanySize;
+              temData2.label.style.company.color = labelCompanyColor;
+            }
+            if (labelStyle.email) {
+              temData2.label.style.email.fontFamily = labelEmailFont;
+              temData2.label.style.email.fontSize = labelEmailSize;
+              temData2.label.style.email.color = labelEmailColor;
+            }
+            if (labelStyle.phone) {
+              temData2.label.style.phone.fontFamily = labelPhoneFont;
+              temData2.label.style.phone.fontSize = labelPhoneSize;
+              temData2.label.style.phone.color = labelPhoneColor;
+            }
+            if (labelStyle.fax) {
+              temData2.label.style.fax.fontFamily = labelFaxFont;
+              temData2.label.style.fax.fontSize = labelFaxSize;
+              temData2.label.style.fax.color = labelFaxColor;
+            }
+            if (labelStyle.team) {
+              temData2.label.style.team.fontFamily = labelTeamFont;
+              temData2.label.style.team.fontSize = labelTeamSize;
+              temData2.label.style.team.color = labelTeamColor;
+            }
+            if (labelStyle.position) {
+              temData2.label.style.position.fontFamily = labelPositionFont;
+              temData2.label.style.position.fontSize = labelPositionSize;
+              temData2.label.style.position.color = labelPositionColor;
+            }
+            if (labelStyle.comNum) {
+              temData2.label.style.comNum.fontFamily = labelComNumFont;
+              temData2.label.style.comNum.fontSize = labelComNumSize;
+              temData2.label.style.comNum.color = labelComNumColor;
+            }
+            if (labelStyle.comAddr) {
+              temData2.value.style.comAddr.fontFamily = labelComAddrFont;
+              temData2.value.style.comAddr.fontSize = labelComAddrSize;
+              temData2.value.style.comAddr.color = labelComAddrColor;
+            }
+            if (valueStyle.name) {
+              temData2.value.style.name.fontFamily = valueNameFont;
+              temData2.value.style.name.fontSize = valueNameSize;
+              temData2.value.style.name.color = valueNameColor;
+            }
+            if (valueStyle.email) {
+              temData2.value.style.email.fontFamily = valueEmailFont;
+              temData2.value.style.email.fontSize = valueEmailSize;
+              temData2.value.style.email.color = valueEmailColor;
+            }
+            if (valueStyle.phone) {
+              temData2.value.style.phone.fontFamily = valuePhoneFont;
+              temData2.value.style.phone.fontSize = valuePhoneSize;
+              temData2.value.style.phone.color = valuePhoneColor;
+            }
+            if (valueStyle.company) {
+              temData2.value.style.company.fontFamily = valueCompanyFont;
+              temData2.value.style.company.fontSize = valueCompanySize;
+              temData2.value.style.company.color = valueCompanyColor;
+            }
+            if (valueStyle.team) {
+              temData2.value.style.team.fontFamily = valueTeamFont;
+              temData2.value.style.team.fontSize = valueTeamSize;
+              temData2.value.style.team.color = valueTeamColor;
+            }
+            if (valueStyle.position) {
+              temData2.value.style.position.fontFamily = valuePositionFont;
+              temData2.value.style.position.fontSize = valuePositionSize;
+              temData2.value.style.position.color = valuePositionColor;
+            }
+            if (valueStyle.fax) {
+              temData2.value.style.fax.fontFamily = valueFaxFont;
+              temData2.value.style.fax.fontSize = valueFaxSize;
+              temData2.value.style.fax.color = valueFaxColor;
+            }
+            if (valueStyle.comNum) {
+              temData2.value.style.comNum.fontFamily = valueComNumFont;
+              temData2.value.style.comNum.fontSize = valueComNumSize;
+              temData2.value.style.comNum.color = valueComNumColor;
+            }
+            if (valueStyle.comAddr) {
+              temData2.value.style.comAddr.fontFamily = valueComAddrFont;
+              temData2.value.style.comAddr.fontSize = valueComAddrSize;
+              temData2.value.style.comAddr.fontSize = valueComAddrColor;
+            }
+            if (valueStyle.logo) {
+              temData2.value.style.logo.width = valueLogoSize;
+              temData2.value.style.logo.height = valueLogoSize;
+            }
+            navigation.push('UploadStep4', {temData: temData2});
+          }}>
+          <Text style={styles.btnText}>다음</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={{...styles.btnNext, marginHorizontal: 12}}
+          onPress={() => navigation.goBack()}>
+          <Text style={styles.btnText}>이전</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -557,14 +1019,15 @@ const styles = StyleSheet.create({
     borderColor: 'yellow',
   },
   content: {
-    flex: 8.5,
+    flex: 7.5,
     alignContent: 'center',
+    // justifyContent: 'space-between',
     width: '90%',
   },
   footer: {
-    // flex: 1,
-    // borderWidth: 1,
-    width: '100%',
+    flex: 1,
+    // borderWidth: 1
+    width: '90%',
     flexDirection: 'row-reverse',
     alignItems: 'flex-start',
   },
@@ -582,7 +1045,7 @@ const styles = StyleSheet.create({
     color: 'white',
   },
 
-  emptyView: {
+  editContainer: {
     flex: 4,
     borderWidth: 1,
     alignItems: 'center',
@@ -599,6 +1062,28 @@ const styles = StyleSheet.create({
     height: cardHeight,
     borderRadius: 4,
     elevation: 5,
+  },
+  row: {
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    marginVertical: 5,
+  },
+  menuText: {
+    fontSize: 20,
+    fontFamily: 'sd_gothic_b',
+    marginRight: 10,
+  },
+  slider: {
+    width: screenWidth / 2,
+    height: 40,
+  },
+  colorBox: {
+    width: 20,
+    height: 20,
+    marginHorizontal: 3,
+    borderRadius: 4,
   },
 });
 

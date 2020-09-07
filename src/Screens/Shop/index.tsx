@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import shopMainScreen from './shopMainScreen';
-import MyPage from './MyPage';
+import ShopMain from './Home';
+import MyPage from './MyShopPage';
 import UploadTemplate from './UploadTemplate';
 import Category from './Category';
 import AndDesign from 'react-native-vector-icons/AntDesign';
@@ -27,7 +27,7 @@ const Shop = ({navigator, route}: Props) => {
       }}>
       <Tabs.Screen
         name="ShopHome"
-        component={shopMainScreen}
+        component={ShopMain}
         options={{
           tabBarIcon: ({focused}) => {
             return (

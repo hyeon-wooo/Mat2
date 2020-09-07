@@ -5,12 +5,11 @@ import {
   Button,
   Image,
   StyleSheet,
-  TouchableHighlight,
+  TouchableOpacity,
 } from 'react-native';
-import {btnAdd} from '~/Assets/Images';
+import {btnAdd, basket, defaultMake} from '~/Assets/Images';
 import Encrypto from 'react-native-vector-icons/Entypo';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {TouchableOpacity} from 'react-native-gesture-handler';
 
 interface Props {
   navigation: any;
@@ -19,12 +18,14 @@ interface Props {
 const SelectMakingWayScreen = ({navigation}: Props) => {
   return (
     <View style={styles.body}>
-      <View
+      <TouchableOpacity
         style={styles.itemContainer}
-        onTouchEnd={() => navigation.navigate('InputData')}>
+        onPress={() => navigation.push('InputData')}>
         <View style={styles.imgContainer}>
-          {/* <Image source={btnAdd} style={styles.img} /> */}
-          <Ionicons name="person-sharp" size={90} color={'#444444'} />
+          <Image
+            source={defaultMake}
+            style={{width: 90, height: 90 * (40.35 / 65.5)}}
+          />
         </View>
         <View style={styles.textContainer}>
           <Text style={styles.itemTitle}>기본 제공 템플릿 사용하기</Text>
@@ -32,14 +33,14 @@ const SelectMakingWayScreen = ({navigation}: Props) => {
             Mat에서 제공하는 배경으로 쉽게 나만의 명함을 제작할 수 있습니다
           </Text>
         </View>
-      </View>
+      </TouchableOpacity>
 
-      <View
+      <TouchableOpacity
         style={styles.itemContainer}
-        onTouchEnd={() => navigation.navigate('InputData')}>
+        onPress={() => navigation.navigate('Shop')}>
         <View style={styles.imgContainer}>
           {/* <Image source={btnAdd} style={styles.img} /> */}
-          <Encrypto name="shop" size={90} color={'#444444'} />
+          <Encrypto name="shop" size={85} color={'#444444'} />
         </View>
         <View style={styles.textContainer}>
           <Text style={styles.itemTitle}>템플릿 구매 후 제작하기</Text>
@@ -47,14 +48,25 @@ const SelectMakingWayScreen = ({navigation}: Props) => {
             마켓에 있는 템플릿을 포인트로 구매하여 제작할 수 있습니다
           </Text>
         </View>
-      </View>
+      </TouchableOpacity>
 
-      <View
+      <TouchableOpacity
         style={[styles.itemContainer, {borderBottomWidth: 0}]}
-        onTouchEnd={() => navigation.navigate('InputData')}>
+        onPress={() =>
+          navigation.navigate('Shop', {
+            screen: 'MyShopPage',
+            params: {
+              screen: 'MyPageMain',
+              params: {initialTab: 'buy'},
+            },
+          })
+        }>
         <View style={styles.imgContainer}>
-          {/* <Image source={btnAdd} style={styles.img} /> */}
-          <Encrypto name="box" size={90} color={'#444444'} />
+          <Image
+            source={basket}
+            style={{width: 80, height: 80 * (44.49 / 51.57)}}
+          />
+          {/* <Encrypto name="box" size={90} color={'#444444'} /> */}
         </View>
         <View style={styles.textContainer}>
           <Text style={styles.itemTitle}>구매한 템플릿으로 제작하기</Text>
@@ -62,7 +74,7 @@ const SelectMakingWayScreen = ({navigation}: Props) => {
             이미 마켓에서 구매한 템플릿으로 제작합니다
           </Text>
         </View>
-      </View>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -70,6 +82,8 @@ const SelectMakingWayScreen = ({navigation}: Props) => {
 const styles = StyleSheet.create({
   body: {
     flex: 1,
+    backgroundColor: '#FBFBFB',
+    alignItems: 'center',
     // width: '100%',
     // height: '100%',
   },
@@ -80,8 +94,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     // justifyContent: 'center',
     alignItems: 'center',
-    borderBottomWidth: 1,
-    borderBottomColor: '#777',
+    justifyContent: 'space-between',
+    borderBottomWidth: 0.5,
+    borderBottomColor: '#D4D4D4',
+    width: '80%',
   },
   imgContainer: {
     width: '30%',
@@ -92,7 +108,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   textContainer: {
-    width: '70%',
+    width: '60%',
     height: '100%',
     // borderWidth: 2,
     // borderColor: 'black',

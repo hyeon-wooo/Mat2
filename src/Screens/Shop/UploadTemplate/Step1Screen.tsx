@@ -7,6 +7,7 @@ import {
   Text,
   Image,
   TouchableOpacity,
+  ToastAndroid,
 } from 'react-native';
 
 import ImagePicker from 'react-native-image-picker';
@@ -48,8 +49,17 @@ const requestPermission = async (
           } else {
             // console.log('### img data ###', response.data)
             // data.valueLogo = response.data
-            setBackData(response.data);
-            setExistBackground(existBackground + 1);
+            const fileSize = (response.data.length * (3 / 4) - 2) / 1024 / 1024;
+            console.log('# fileSize #', fileSize);
+            if (fileSize > 0.5) {
+              ToastAndroid.show(
+                '0.5MB 이상의 이미지는 사용하실 수 없습니다',
+                ToastAndroid.SHORT,
+              );
+            } else {
+              setBackData(response.data);
+              setExistBackground(existBackground + 1);
+            }
           }
         },
       );

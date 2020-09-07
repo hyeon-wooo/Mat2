@@ -5,9 +5,9 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {NavigationContainer, useNavigation} from '@react-navigation/native';
 import Encrypto from 'react-native-vector-icons/Entypo';
 import MainScreen from '~/Screens/Home/mainScreen';
-import Settings from '~/Screens/Settings';
 import Shop from '~/Screens/Shop';
 import Wallet from '~/Screens/Wallet';
+import More from '~/Screens/More';
 
 import {
   imgMainActive,
@@ -19,6 +19,8 @@ import {
   imgWalletActive,
   imgWalletInactive,
 } from '~/Assets/Images';
+
+import db from '~/DB';
 
 const Tabs = createBottomTabNavigator();
 
@@ -66,8 +68,8 @@ const BottomTab = () => {
           tabBarIcon: ({focused}) => {
             return (
               <Image
-                source={focused ? imgMarketActive : imgMarketInactive}
-                style={{width: 25, height: 25}}
+                source={imgMarketInactive}
+                style={{width: 23, height: 23}}
               />
             );
           },
@@ -75,10 +77,10 @@ const BottomTab = () => {
         }}
       />
       <Tabs.Screen
-        name="Settings3"
-        component={Settings}
+        name="More"
+        component={More}
         options={{
-          title: '더보기',
+          // tabBarVisible: false,
           tabBarIcon: ({focused}) => {
             return (
               <Encrypto

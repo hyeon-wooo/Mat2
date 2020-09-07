@@ -12,11 +12,30 @@ import tradeCode from './Screens/Home/TradeCode';
 import createCode from './Screens/Home/TradeCode/createCode';
 import selectCardToSend from './Screens/Home/TradeCode/selectCardToSendScreen';
 import enterCode from './Screens/Home/TradeCode/enterCode';
+import SignUp from './Screens/SignUpScreen';
 
 const Stack = createStackNavigator();
 const HomeStack = () => {
   return (
-    <Stack.Navigator initialRouteName="Home">
+    <Stack.Navigator
+      initialRouteName="Home"
+      screenOptions={{
+        headerStyle: {backgroundColor: '#FBFBFB', elevation: 1},
+        headerTitleStyle: {
+          fontFamily: 'sd_gothic_b',
+          fontSize: 20,
+          color: '#444444',
+        },
+      }}>
+      <Stack.Screen
+        name="SignUp"
+        component={SignUp}
+        options={{
+          // headerShown: false,
+          title: '회원가입',
+          headerTitleStyle: {fontSize: 20, fontFamily: 'sd_gothic_b'},
+        }}
+      />
       <Stack.Screen
         name="Home"
         component={HomeTabs}
@@ -25,7 +44,9 @@ const HomeStack = () => {
       <Stack.Screen
         name="Make"
         component={selectMakingWayScreen}
-        // options={{headerShown: false}}
+        options={{
+          title: '명함 제작',
+        }}
       />
       <Stack.Screen
         name="InputData"

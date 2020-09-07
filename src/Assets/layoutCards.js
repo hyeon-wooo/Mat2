@@ -12,13 +12,6 @@ const data = [
       labelComNum: 'Company Tel.',
       // labelComAddr: '회사주소',
       style: {
-        name: {
-          fontSize: 3,
-          fontFamily: 'sd_gothic_m',
-          color: '#6270EA',
-          left: '0%',
-          top: '0%',
-        },
         email: {
           fontSize: 2.5,
           fontFamily: 'sd_gothic_m',
@@ -26,6 +19,7 @@ const data = [
           left: '59%',
           top: '59%',
           fontWeight: 'bold',
+          position: 'absolute',
         },
         phone: {
           fontSize: 2.5,
@@ -34,6 +28,7 @@ const data = [
           left: '31%',
           top: '59%',
           fontWeight: 'bold',
+          position: 'absolute',
         },
         fax: {
           fontSize: 2.5,
@@ -42,27 +37,7 @@ const data = [
           left: '75%',
           top: '65%',
           fontWeight: 'bold',
-        },
-        company: {
-          fontSize: 4,
-          fontFamily: 'sd_gothic_m',
-          color: '#6270EA',
-          left: '0%',
-          top: '0%',
-        },
-        position: {
-          fontSize: 2.5,
-          fontFamily: 'sd_gothic_m',
-          color: '#6270EA',
-          left: '40%',
-          top: '38%',
-        },
-        team: {
-          fontSize: 4,
-          fontFamily: 'sd_gothic_m',
-          color: '#6270EA',
-          left: '0%',
-          top: '0%',
+          position: 'absolute',
         },
         comNum: {
           fontSize: 2.5,
@@ -71,13 +46,7 @@ const data = [
           left: '31%',
           top: '65%',
           fontWeight: 'bold',
-        },
-        comAddr: {
-          fontSize: 2.5,
-          fontFamily: 'sd_gothic_m',
-          color: '#6270EA',
-          left: '0%',
-          top: '0%',
+          position: 'absolute',
         },
       },
     },
@@ -106,6 +75,7 @@ const data = [
           fontWeight: 'bold',
           color: 'black',
           letterSpacing: 3,
+          position: 'absolute',
         },
         email: {
           fontSize: 2.5,
@@ -114,6 +84,7 @@ const data = [
           left: '68%',
           top: '59%',
           fontWeight: 'bold',
+          position: 'absolute',
         },
         phone: {
           fontSize: 2.5,
@@ -122,6 +93,7 @@ const data = [
           left: '37%',
           top: '59%',
           fontWeight: 'bold',
+          position: 'absolute',
         },
         fax: {
           fontSize: 2.5,
@@ -130,6 +102,7 @@ const data = [
           left: '80%',
           top: '65%',
           fontWeight: 'bold',
+          position: 'absolute',
         },
         company: {
           fontSize: 4,
@@ -137,6 +110,7 @@ const data = [
           color: '#333333',
           left: '0%',
           top: '0%',
+          position: 'absolute',
         },
         position: {
           fontSize: 2.5,
@@ -145,6 +119,7 @@ const data = [
           left: '31%',
           top: '43%',
           fontWeight: 'bold',
+          position: 'absolute',
         },
         team: {
           fontSize: 4,
@@ -152,6 +127,7 @@ const data = [
           color: '#333333',
           left: '0%',
           top: '0%',
+          position: 'absolute',
         },
         comNum: {
           fontSize: 2.5,
@@ -160,6 +136,7 @@ const data = [
           left: '47%',
           top: '65%',
           fontWeight: 'bold',
+          position: 'absolute',
         },
         comAddr: {
           fontSize: 2.5,
@@ -168,12 +145,14 @@ const data = [
           left: '31%',
           top: '53%',
           fontWeight: 'bold',
+          position: 'absolute',
         },
         logo: {
           width: 20,
           height: 20,
           left: '10%',
           top: '38%',
+          position: 'absolute',
         },
       },
     },
@@ -182,29 +161,23 @@ const data = [
   {
     id: 2,
     label: {
-      // labelName: '이름',
+      labelName: '이름',
       labelEmail: 'Email.',
       labelPhone: 'Tel.',
       labelFax: 'Fax.',
-      // labelCompany: '회사명',
-      // labelPosition: '직책',
-      // labelTeam: '부서',
+      labelCompany: '회사명',
+      labelPosition: '직책',
+      labelTeam: '부서',
       labelComNum: 'Company Tel.',
-      // labelComAddr: '회사주소',
+      labelComAddr: '회사주소',
       style: {
-        name: {
-          fontSize: 3,
-          fontFamily: 'sd_gothic_m',
-          color: '#6270EA',
-          left: '0%',
-          top: '0%',
-        },
         email: {
           fontSize: 2.5,
           fontFamily: 'sd_gothic_m',
           color: '#6270EA',
           left: '59%',
           top: '59%',
+          position: 'absolute',
           fontWeight: 'bold',
         },
         phone: {
@@ -213,6 +186,7 @@ const data = [
           color: '#6270EA',
           left: '31%',
           top: '59%',
+          position: 'absolute',
           fontWeight: 'bold',
         },
         fax: {
@@ -221,28 +195,8 @@ const data = [
           color: '#6270EA',
           left: '75%',
           top: '65%',
+          position: 'absolute',
           fontWeight: 'bold',
-        },
-        company: {
-          fontSize: 4,
-          fontFamily: 'sd_gothic_m',
-          color: '#6270EA',
-          left: '0%',
-          top: '0%',
-        },
-        position: {
-          fontSize: 2.5,
-          fontFamily: 'sd_gothic_m',
-          color: '#6270EA',
-          left: '40%',
-          top: '38%',
-        },
-        team: {
-          fontSize: 4,
-          fontFamily: 'sd_gothic_m',
-          color: '#6270EA',
-          left: '0%',
-          top: '0%',
         },
         comNum: {
           fontSize: 2.5,
@@ -251,13 +205,7 @@ const data = [
           left: '31%',
           top: '65%',
           fontWeight: 'bold',
-        },
-        comAddr: {
-          fontSize: 2.5,
-          fontFamily: 'sd_gothic_m',
-          color: '#6270EA',
-          left: '0%',
-          top: '0%',
+          position: 'absolute',
         },
       },
     },
@@ -286,6 +234,7 @@ const data = [
           fontWeight: 'bold',
           color: 'black',
           letterSpacing: 3,
+          position: 'absolute',
         },
         email: {
           fontSize: 2.5,
@@ -294,6 +243,7 @@ const data = [
           left: '68%',
           top: '59%',
           fontWeight: 'bold',
+          position: 'absolute',
         },
         phone: {
           fontSize: 2.5,
@@ -302,6 +252,7 @@ const data = [
           left: '37%',
           top: '59%',
           fontWeight: 'bold',
+          position: 'absolute',
         },
         fax: {
           fontSize: 2.5,
@@ -310,6 +261,7 @@ const data = [
           left: '80%',
           top: '65%',
           fontWeight: 'bold',
+          position: 'absolute',
         },
         company: {
           fontSize: 4,
@@ -317,6 +269,7 @@ const data = [
           color: '#333333',
           left: '0%',
           top: '0%',
+          position: 'absolute',
         },
         position: {
           fontSize: 2.5,
@@ -325,6 +278,7 @@ const data = [
           left: '31%',
           top: '43%',
           fontWeight: 'bold',
+          position: 'absolute',
         },
         team: {
           fontSize: 4,
@@ -332,6 +286,7 @@ const data = [
           color: '#333333',
           left: '0%',
           top: '0%',
+          position: 'absolute',
         },
         comNum: {
           fontSize: 2.5,
@@ -340,6 +295,7 @@ const data = [
           left: '47%',
           top: '65%',
           fontWeight: 'bold',
+          position: 'absolute',
         },
         comAddr: {
           fontSize: 2.5,
@@ -348,12 +304,14 @@ const data = [
           left: '31%',
           top: '53%',
           fontWeight: 'bold',
+          position: 'absolute',
         },
         logo: {
           width: 20,
           height: 20,
           left: '10%',
           top: '38%',
+          position: 'absolute',
         },
       },
     },
