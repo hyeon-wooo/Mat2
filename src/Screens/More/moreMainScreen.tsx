@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import {
   notice,
@@ -7,13 +7,20 @@ import {
   chargePoint,
   imgInfo,
 } from '~/Assets/Images';
+import db from '~/DB';
 
 interface prop {
   navigation: any;
 }
 
 const MoreMainScreen = ({navigation}: prop) => {
-  const [myPoint, setMyPoint] = useState(0);
+  const [info, setInfo] = useState(new Object());
+
+  useEffect(() => {
+    db.getMyInfo()
+      .then((info: any) => setInfo(info))
+      .catch((err: any) => console.log(err));
+  }, []);
   return (
     <View style={{flex: 1, backgroundColor: '#FBFBFB'}}>
       <View style={s.myInfo}>
@@ -25,7 +32,7 @@ const MoreMainScreen = ({navigation}: prop) => {
               fontSize: 22,
               color: '#444444',
             }}>
-            {'홍길동'}
+            {info.myName}
           </Text>
           <Text
             style={{
@@ -34,7 +41,7 @@ const MoreMainScreen = ({navigation}: prop) => {
               fontFamily: 'sd_gothic_m',
               color: '#AEAEAE',
             }}>
-            {'bvv8808'}
+            {info.myId}
           </Text>
         </View>
         <View style={s.section2}>
@@ -49,7 +56,7 @@ const MoreMainScreen = ({navigation}: prop) => {
               fontSize: 15,
               marginRight: 15,
             }}>
-            {myPoint} pts
+            {info.myPoint} pts
           </Text>
         </View>
       </View>

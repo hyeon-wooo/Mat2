@@ -13,7 +13,6 @@ import Header from '~/components/MakeHeader';
 import {imgChecked, header2} from '~/Assets/Images';
 import db from '~/DB';
 
-const layoutData = require('~/Assets/layoutCards');
 // console.log('## layoutData ##', layoutData)
 const deviceWidth = Dimensions.get('window').width;
 
@@ -50,7 +49,12 @@ const SelectCardToSend = ({route, navigation}: Props) => {
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
-        <Text style={{textAlign: 'center', fontSize: 25}}>
+        <Text
+          style={{
+            textAlign: 'center',
+            fontSize: 25,
+            fontFamily: 'sd_gothic_b',
+          }}>
           공유할 명함을 선택해주세요
         </Text>
       </View>
@@ -84,7 +88,7 @@ const SelectCardToSend = ({route, navigation}: Props) => {
               style={styles.btnNext}
               onPress={() => {
                 if (selected !== -1)
-                  navigation.navigate(
+                  navigation.push(
                     'CreateCode',
                     myCards.filter((data: any) => data.id === selected),
                   );

@@ -26,7 +26,7 @@ const Card = ({parentWidth}: Props) => {
       /> */}
       <Image
         source={imgMakeCard}
-        style={{width: cardWidth, height: cardHeight}}
+        style={{width: cardWidth, height: cardHeight, borderRadius: 5}}
       />
     </View>
   );
@@ -37,7 +37,6 @@ const styles = StyleSheet.create({
     // left: '5%',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#aaa',
     borderRadius: 5,
     padding: 5,
   },

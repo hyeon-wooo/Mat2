@@ -19,8 +19,8 @@ import {loadLogo, loadImg} from '~/Assets/Images';
 const cardWidth = Dimensions.get('screen').width * 0.9;
 
 const requestPermission = async (setUploadedLogo: any) => {
-  await request(PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE).then((result) => {
-    if (result === RESULTS.GRANTED) {
+  // await request(PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE).then((result) => {
+  //   if (result === RESULTS.GRANTED) {
       ImagePicker.launchImageLibrary(
         {
           title: 'Load Photo',
@@ -49,8 +49,8 @@ const requestPermission = async (setUploadedLogo: any) => {
         },
       );
     }
-  });
-};
+//   });
+// };
 
 interface prop {
   navigation: any;

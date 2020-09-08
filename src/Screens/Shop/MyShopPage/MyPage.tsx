@@ -44,7 +44,7 @@ const MyPage = ({navigation, route}: Props) => {
           idOnServer = info.idOnServer;
           setIdOnServerSTATE(info.idOnServer);
           return axios.get(
-            `http://mat-server-1.herokuapp.com/tem/getByUser?makerId=${idOnServer}`,
+            `https://mat-server-1.herokuapp.com/tem/getByUser?makerId=${idOnServer}`,
           );
         })
         .then((res: any) => {
@@ -52,7 +52,7 @@ const MyPage = ({navigation, route}: Props) => {
             setTems(res.data.resData);
 
           return axios.get(
-            `http://mat-server-1.herokuapp.com/tem/purchaseLog?buyerId=${idOnServer}`,
+            `https://mat-server-1.herokuapp.com/tem/purchaseLog?buyerId=${idOnServer}`,
           );
         })
         .then((res: any) => {
@@ -99,7 +99,7 @@ const MyPage = ({navigation, route}: Props) => {
                     //tems에서 선택된 템플릿들 삭제, 서버에 삭제 요청
                     axios
                       .post(
-                        `http://mat-server-1.herokuapp.com/tem/deleteRegistedTem`,
+                        `https://mat-server-1.herokuapp.com/tem/deleteRegistedTem`,
                         {
                           makerId: idOnServerSTATE,
                           temIds: selected,
@@ -124,7 +124,7 @@ const MyPage = ({navigation, route}: Props) => {
                     //buyTems에서 선택된 템플릿들 삭제
                     axios
                       .post(
-                        `http://mat-server-1.herokuapp.com/tem/deletePurchasedTem`,
+                        `https://mat-server-1.herokuapp.com/tem/deletePurchasedTem`,
                         {
                           buyerId: idOnServerSTATE,
                           temIds: selected,

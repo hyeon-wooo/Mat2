@@ -62,7 +62,7 @@ const EnterCodeScreen = ({navigation}: Props) => {
               );
               axios
                 .get(
-                  `http://mat-server-1.herokuapp.com/pin/read?pin=${enteredCode}`,
+                  `https://mat-server-1.herokuapp.com/pin/read?pin=${enteredCode}`,
                 )
                 .then((res: any) => {
                   console.log('## axios res ##', res.data);

@@ -144,7 +144,7 @@ const SignUpScreen = ({navigation}: prop) => {
                   ToastAndroid.SHORT,
                 );
               } else {
-                Axios.post('http://mat-server-1.herokuapp.com/user/signUp', {
+                Axios.post('https://mat-server-1.herokuapp.com/user/signUp', {
                   userId,
                   birth,
                   phone,

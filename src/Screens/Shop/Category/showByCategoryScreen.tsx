@@ -73,7 +73,7 @@ const ShowByCategory = ({navigation, route}: Props) => {
     focused &&
       axios
         .get(
-          `http://mat-server1.herokuapp.com/template/resData?page=${currentPageM}&filterName=최신순&categoryName=${categoryName}`,
+          `https://mat-server1.herokuapp.com/template/resData?page=${currentPageM}&filterName=최신순&categoryName=${categoryName}`,
         )
         .then((res: any) => {
           // console.log('## res data ## ', res.data);

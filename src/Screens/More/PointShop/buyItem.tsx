@@ -130,7 +130,7 @@ const BuyItemScreen = ({navigation, route}: prop) => {
             // 로컬DB에 저장
             const newPoint = myPoint - item.neededPoint;
             axios
-              .post(`http://mat-server-1.herokuapp.com/pointshop/purchase`, {
+              .post(`https://mat-server-1.herokuapp.com/pointshop/purchase`, {
                 buyerId: myIdOnServer,
                 itemName: item.title,
                 shopName: item.shopName,

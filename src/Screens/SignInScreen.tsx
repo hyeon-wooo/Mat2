@@ -86,7 +86,7 @@ const SignInScreen = ({navigation, setIsLoggedIn}: prop) => {
             } else if (pw.length === 0) {
               ToastAndroid.show('비밀번호를 입력해주세요', ToastAndroid.SHORT);
             } else {
-              Axios.post('http://mat-server-1.herokuapp.com/user/signIn', {
+              Axios.post('https://mat-server-1.herokuapp.com/user/signIn', {
                 userId,
                 password: pw,
               }).then((res: any) => {

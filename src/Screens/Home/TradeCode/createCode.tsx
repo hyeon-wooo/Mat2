@@ -13,6 +13,7 @@ import {imgCopy} from '~/Assets/Images';
 import Clipboard from '@react-native-community/clipboard';
 import {useIsFocused} from '@react-navigation/native';
 import {checkNotifications} from 'react-native-permissions';
+import db from '~/DB';
 
 const screenWidth = Dimensions.get('window').width * (7 / 10);
 
@@ -28,21 +29,24 @@ const CreateCode = ({navigation, route}: Props) => {
     const selectedCard = route.params[0];
     // console.log('#card# ,', selectedCard);
     if (focused) {
-      axios
-        .post(
-          'http://mat-server-1.herokuapp.com/pin/create',
-          {
-            userId: 5,
-            cardId: selectedCard.id,
-            fullData: selectedCard.fullData,
-          },
-          {
-            headers: {
-              Accept: 'application/json',
-              'Content-type': 'application/json;charset=UTF-8',
+      db.getMyInfo()
+        .then((info: any) => {
+          return axios.post(
+            'https://mat-server-1.herokuapp.com/pin/create',
+            {
+              userId: info.idOnServer,
+              cardId: selectedCard.id,
+              fullData: selectedCard.fullData,
             },
-          },
-        )
+            {
+              headers: {
+                Accept: 'application/json',
+                'Content-type': 'application/json;charset=UTF-8',
+              },
+            },
+          );
+        })
+
         .then((res: any) => {
           console.log('## axios response ##', res.data);
           const strPin = String(res.data.pin);

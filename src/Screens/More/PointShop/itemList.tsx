@@ -29,7 +29,7 @@ const ItemList = ({navigation, route}: prop) => {
   useEffect(() => {
     axios
       .get(
-        `http://mat-server-1.herokuapp.com/pointshop/getItems?shopName=${route.params.shopName}`,
+        `https://mat-server-1.herokuapp.com/pointshop/getItems?shopName=${route.params.shopName}`,
       )
       .then((res: any) => {
         if (res.data.code === 0) {

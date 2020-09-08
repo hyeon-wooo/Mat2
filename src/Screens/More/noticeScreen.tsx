@@ -64,7 +64,7 @@ const Notice = ({notice}: NoticeProps) => {
 const NoticeScreen = () => {
   const [noties, setNoties] = useState(new Array());
   useEffect(() => {
-    Axios.get(`http://mat-server-1.herokuapp.com/notice/getAll`).then(
+    Axios.get(`https://mat-server-1.herokuapp.com/notice/getAll`).then(
       (res: any) => {
         if (res.data.code === 0) {
           setNoties(res.data.data);

@@ -74,7 +74,7 @@ const TemplateDetail = ({route, navigation}: Props) => {
                   // 화면 이동
                   db.getMyInfo().then(async (info: any) => {
                     axios
-                      .post(`http://mat-server-1.herokuapp.com/tem/purchase`, {
+                      .post(`https://mat-server-1.herokuapp.com/tem/purchase`, {
                         buyerId: info.idOnServer,
                         temId: temId,
                       })
