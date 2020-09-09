@@ -543,7 +543,6 @@ const getMyCards = () =>
     db.transaction(
       (tx) => {
         tx.executeSql(`select * from myCard`, [], (tx, result) => {
-          console.log('#transactio : SELECT myCard# ', result.rows.length);
           for (let i = 0; i < result.rows.length; i++) {
             const item = result.rows.item(i);
             data.push(item);

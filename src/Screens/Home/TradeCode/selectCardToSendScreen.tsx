@@ -8,7 +8,8 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
-import LayoutCard from '~/components/LayoutCard';
+// import LayoutCard from '~/components/LayoutCard';
+import TemplateCard from '~/components/TemplateCard';
 import Header from '~/components/MakeHeader';
 import {imgChecked, header2} from '~/Assets/Images';
 import db from '~/DB';
@@ -60,28 +61,33 @@ const SelectCardToSend = ({route, navigation}: Props) => {
       </View>
       <View style={styles.scrollContainer}>
         <ScrollView>
-          {myCards.map((card: any, idx: number) => (
-            <View key={card.id}>
-              <Text>{JSON.parse(card.fullData).value.cardName || ''}</Text>
-              <View
-                style={[
-                  styles.cardContainer,
-                  selected === card.id ? styles.selected : {},
-                ]}
-                onTouchEnd={() => setSelected(card.id)}>
-                <LayoutCard
-                  key={card.id}
-                  cardWidth={cardWidth}
-                  data={JSON.parse(card.fullData)}
-                />
-                <Image
-                  key={100}
-                  source={selected === card.id ? imgChecked : null}
-                  style={styles.imgChecked}
-                />
+          {myCards.map((card: any, idx: number) => {
+            const cardData = JSON.parse(
+              card.fullData + card.fullData2 + card.fullData3,
+            );
+            return (
+              <View key={card.id}>
+                <Text>{cardData.value.cardName || ''}</Text>
+                <View
+                  style={[
+                    styles.cardContainer,
+                    selected === card.id ? styles.selected : {},
+                  ]}
+                  onTouchEnd={() => setSelected(card.id)}>
+                  <TemplateCard
+                    key={card.id}
+                    cardWidth={cardWidth}
+                    data={cardData}
+                  />
+                  <Image
+                    key={100}
+                    source={selected === card.id ? imgChecked : null}
+                    style={styles.imgChecked}
+                  />
+                </View>
               </View>
-            </View>
-          ))}
+            );
+          })}
 
           <View style={styles.btnConatiner}>
             <TouchableOpacity
