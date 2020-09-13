@@ -14,6 +14,8 @@ import ImagePicker from 'react-native-image-picker';
 import {PERMISSIONS, RESULTS, request} from 'react-native-permissions';
 
 import {templateHeader1, plusCard} from '~/Assets/Images';
+import {useFocusEffect, useIsFocused} from '@react-navigation/native';
+import PointhsopHeader from '~/components/PointShopHeader';
 
 const deviceWidth = Dimensions.get('window').width;
 
@@ -70,8 +72,16 @@ const requestPermission = async (
 const Step1 = ({route, navigation}: Props) => {
   const [existBackground, setExistBackground] = useState(0);
   const [backData, setBackData] = useState('');
+  const focused = useIsFocused();
+  useEffect(() => {
+    if (focused) {
+      setExistBackground(0);
+      setBackData('');
+    }
+  }, [focused]);
   return (
     <View style={styles.container}>
+      <PointhsopHeader title="상품 등록하기" />
       <View style={styles.headerContainer}>
         {/* <Header current={2} finish={[1]} /> */}
         <Image

@@ -87,14 +87,30 @@ const WalletMainScreen = ({navigation, route}: Props) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [toggle, setToggle] = useState(false);
   const focused = useIsFocused();
+  const [deletedGroupId, setDeletedGroupId] = useState(new Array());
 
   // useEffect(()=> {
   //   getCards(groupId, filter).then(res => {})
   // }, [groupId, filter])
   useEffect(() => {
-    getCards(groupId, filter).then((res: any) => {
+    getCards(0, 'byName').then((res: any) => {
       setCards(res);
     });
+  }, []);
+  useEffect(() => {
+    if (focused) {
+      if (deletedGroupId.includes(groupId)) {
+        setFilter('byName');
+        setCurrentGroup('전체');
+        getCards(0, 'byName').then((res: any) => {
+          setCards(res);
+        });
+      } else {
+        getCards(groupId, filter).then((res: any) => {
+          setCards(res);
+        });
+      }
+    }
   }, [groupId, filter, toggle, focused]);
 
   return (
@@ -142,9 +158,10 @@ const WalletMainScreen = ({navigation, route}: Props) => {
         <TouchableOpacity
           style={styles.menuGroup}
           onPressOut={() =>
-            navigation.navigate('SelectGroup', {
+            navigation.push('SelectGroup', {
               onGoBack1: setGroupId,
               onGoBack2: setCurrentGroup,
+              setDeletedGroupId,
               currentGroupId: groupId,
             })
           }>

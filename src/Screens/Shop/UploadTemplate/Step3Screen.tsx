@@ -977,7 +977,7 @@ const Step3Screen = ({route, navigation}: Props) => {
             if (valueStyle.comAddr) {
               temData2.value.style.comAddr.fontFamily = valueComAddrFont;
               temData2.value.style.comAddr.fontSize = valueComAddrSize;
-              temData2.value.style.comAddr.fontSize = valueComAddrColor;
+              temData2.value.style.comAddr.color = valueComAddrColor;
             }
             if (valueStyle.logo) {
               temData2.value.style.logo.width = valueLogoSize;

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   StyleSheet,
@@ -15,6 +15,8 @@ import {imgChecked, templateHeader2, imgUnchecked} from '~/Assets/Images';
 import TemplateCard from '~/components/TemplateCard';
 import axios from 'axios';
 import db from '~/DB';
+import {useIsFocused} from '@react-navigation/native';
+import {ForceTouchGestureHandler} from 'react-native-gesture-handler';
 
 const screenWidth = Dimensions.get('screen').width;
 const screenHeight = Dimensions.get('screen').height;
@@ -32,8 +34,15 @@ const TemplateDetail = ({route, navigation}: Props) => {
   // console.log('## tem ##', typeof temData, temData);
   const temData = JSON.parse(data);
   // console.log('# tem # ', typeof temData, temData.value.style);
-  const [point, setPoint] = useState(0);
+  const [myInfo, setMyInfo] = useState(new Object());
   const [modalVisible, setModalVisible] = useState(false);
+  const focused = useIsFocused();
+
+  useEffect(() => {
+    if (focused) {
+      db.getMyInfo().then((info: any) => setMyInfo(info));
+    }
+  }, []);
   return (
     <View style={styles.container}>
       <Modal
@@ -202,7 +211,7 @@ const TemplateDetail = ({route, navigation}: Props) => {
             </View>
             <View style={styles.pointRow}>
               <Text style={styles.pointName}>보유 포인트</Text>
-              <Text style={styles.price}>{price}</Text>
+              <Text style={styles.price}>{myInfo.myPoint}</Text>
               <Text style={styles.p}>P</Text>
             </View>
           </View>
@@ -211,7 +220,11 @@ const TemplateDetail = ({route, navigation}: Props) => {
       <View style={styles.footer}>
         <TouchableOpacity
           style={styles.btnNext}
-          onPress={() => setModalVisible(!modalVisible)}>
+          onPress={() => {
+            if (price - myInfo.myPoint > 0)
+              ToastAndroid.show('포인트가 부족합니다', ToastAndroid.SHORT);
+            else setModalVisible(!modalVisible);
+          }}>
           <Text style={styles.btnText}>구매하기</Text>
         </TouchableOpacity>
       </View>

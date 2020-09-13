@@ -47,10 +47,10 @@ const ShopMain = ({navigation, route}: Props) => {
         sortedArr = temData.sort((a: any, b: any) => b.cntBut - a.cntBuy);
         break;
       case 'expensive':
-        sortedArr = temData.sort((a: any, b: any) => b.Price - a.Price);
+        sortedArr = temData.sort((a: any, b: any) => b.price - a.price);
         break;
       case 'cheep':
-        sortedArr = temData.sort((a: any, b: any) => a.Price - b.Price);
+        sortedArr = temData.sort((a: any, b: any) => a.price - b.price);
         break;
     }
 
@@ -194,7 +194,7 @@ const ShopMain = ({navigation, route}: Props) => {
                         navigation.push('TemplateDetail', {
                           data: tem.fullData,
                           temId: tem.id,
-                          price: tem.Price,
+                          price: tem.price,
                         });
                       }}>
                       <TemplateCard

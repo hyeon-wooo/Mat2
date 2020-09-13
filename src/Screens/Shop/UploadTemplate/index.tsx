@@ -20,7 +20,8 @@ const UploadTemplate = () => {
         component={Step1}
         options={{
           title: '상품 등록하기',
-          headerTitleStyle: {fontFamily: 'sd_gothic_m'},
+          // headerTitleStyle: {fontFamily: 'sd_gothic_m'},
+          headerShown: false,
         }}
       />
       <Stack.Screen

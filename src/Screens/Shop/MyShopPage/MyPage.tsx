@@ -15,7 +15,7 @@ import db from '~/DB';
 import TemplateCard from '~/components/TemplateCard';
 import {template} from '@babel/core';
 import {imgDelete, imgChecked} from '~/Assets/Images';
-import {useFocusEffect, useIsFocused} from '@react-navigation/native';
+import {useIsFocused} from '@react-navigation/native';
 
 const cardWidth = Dimensions.get('screen').width * 0.9;
 
@@ -35,7 +35,7 @@ const MyPage = ({navigation, route}: Props) => {
   const [idOnServerSTATE, setIdOnServerSTATE] = useState(0);
   // console.log('## buyTems.length ##', buyTems.length);
   useEffect(() => {
-    if (focused) console.log('###### myPage FOCUSED #######');
+    if (focused) setIsEdit(false);
     let idOnServer = 0;
     focused &&
       db
@@ -221,7 +221,7 @@ const MyPage = ({navigation, route}: Props) => {
           }}>
           <Text
             style={{fontSize: 17, color: '#6078EA', fontFamily: 'sd_gothic_b'}}>
-            {!isEdit ? '삭제' : '완료'}
+            {!isEdit ? '편집' : '완료'}
           </Text>
         </TouchableOpacity>
       </View>

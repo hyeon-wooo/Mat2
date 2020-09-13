@@ -49,10 +49,10 @@ const ShowByCategory = ({navigation, route}: Props) => {
         sortedArr = temData.sort((a: any, b: any) => b.cntBut - a.cntBuy);
         break;
       case 'expensive':
-        sortedArr = temData.sort((a: any, b: any) => b.Price - a.Price);
+        sortedArr = temData.sort((a: any, b: any) => b.price - a.price);
         break;
       case 'cheep':
-        sortedArr = temData.sort((a: any, b: any) => a.Price - b.Price);
+        sortedArr = temData.sort((a: any, b: any) => a.price - b.price);
         break;
     }
 
@@ -73,7 +73,7 @@ const ShowByCategory = ({navigation, route}: Props) => {
     focused &&
       axios
         .get(
-          `https://mat-server1.herokuapp.com/tem/resData?page=${currentPageM}&filterName=최신순&categoryName=${categoryName}`,
+          `https://mat-server-1.herokuapp.com/tem/resData?page=${currentPageM}&filterName=최신순&categoryName=${categoryName}`,
         )
         .then((res: any) => {
           // console.log('## res data ## ', res.data);
@@ -196,7 +196,16 @@ const ShowByCategory = ({navigation, route}: Props) => {
               <View key={idx} style={s.row}>
                 {innerArr.map((tem: any) => {
                   return (
-                    <TouchableOpacity style={s.item} key={tem.id}>
+                    <TouchableOpacity
+                      style={s.item}
+                      key={tem.id}
+                      onPress={() => {
+                        navigation.push('TemplateDetail', {
+                          data: tem.fullData,
+                          temId: tem.id,
+                          price: tem.price,
+                        });
+                      }}>
                       <TemplateCard
                         data={JSON.parse(tem.fullData)}
                         cardWidth={temWidth}
