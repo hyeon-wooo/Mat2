@@ -27,7 +27,7 @@ const CreateCode = ({navigation, route}: Props) => {
   const focused = useIsFocused();
   useEffect(() => {
     const selectedCard = route.params[0];
-    // console.log('#card# ,', selectedCard);
+    console.log('#card# ,', selectedCard);
     if (focused) {
       db.getMyInfo()
         .then((info: any) => {

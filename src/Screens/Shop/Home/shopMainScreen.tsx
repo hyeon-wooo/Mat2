@@ -13,6 +13,7 @@ import axios from 'axios';
 import {btnOk, imgChecked} from '~/Assets/Images';
 import {useIsFocused} from '@react-navigation/native';
 import TemplateCard from '~/components/TemplateCard';
+import PointshopHeader from '~/components/PointShopHeader';
 
 const screenWidth = Dimensions.get('screen').width;
 const temWidth = (screenWidth / 2) * (9 / 10);
@@ -105,6 +106,7 @@ const ShopMain = ({navigation, route}: Props) => {
   }, [currentPageM, filterType, focused]);
   return (
     <View style={{flex: 1, alignItems: 'center', backgroundColor: '#FBFBFB'}}>
+      <PointshopHeader title="템플릿 마켓" />
       <View style={s.ads}></View>
       <View style={s.filterBox}>
         <TouchableOpacity

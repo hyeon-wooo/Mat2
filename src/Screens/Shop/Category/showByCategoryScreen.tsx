@@ -15,6 +15,7 @@ import {
 import TemplateCard from '~/components/TemplateCard';
 import axios from 'axios';
 import {imgChecked} from '~/Assets/Images';
+import PointshopHeader from '~/components/PointShopHeader';
 
 const screenWidth = Dimensions.get('screen').width;
 const temWidth = (screenWidth / 2) * (9 / 10);
@@ -68,7 +69,7 @@ const ShowByCategory = ({navigation, route}: Props) => {
   useEffect(() => {
     const categoryName = route.params.category;
 
-    navigation.setOptions({title: categoryName});
+    // navigation.setOptions({title: categoryName});
 
     focused &&
       axios
@@ -103,6 +104,7 @@ const ShowByCategory = ({navigation, route}: Props) => {
   }, [currentPageM, filterType, focused]);
   return (
     <View style={{flex: 1, alignItems: 'center', backgroundColor: '#FBFBFB'}}>
+      <PointshopHeader title={route.params.category} />
       <View style={s.filterBox}>
         <TouchableOpacity
           style={[
@@ -193,11 +195,21 @@ const ShowByCategory = ({navigation, route}: Props) => {
               </Text>
             )}
             {temArr.map((innerArr: any, idx: number) => (
-              <View key={idx} style={s.row}>
+              <View
+                key={idx}
+                style={[
+                  s.row,
+                  innerArr.length > 1
+                    ? {justifyContent: 'space-evenly'}
+                    : {
+                        justifyContent: 'flex-start',
+                        marginLeft: screenWidth * 0.0333,
+                      },
+                ]}>
                 {innerArr.map((tem: any) => {
                   return (
                     <TouchableOpacity
-                      style={s.item}
+                      style={[s.item, {borderColor: 'gray', borderWidth: 0.5}]}
                       key={tem.id}
                       onPress={() => {
                         navigation.push('TemplateDetail', {
@@ -275,7 +287,7 @@ const s = StyleSheet.create({
   },
   row: {
     flexDirection: 'row',
-    justifyContent: 'space-evenly',
+
     marginVertical: 8,
   },
   btnPrePage: {

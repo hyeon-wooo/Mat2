@@ -13,8 +13,9 @@ const ShopHome = () => {
         name="ShopMain"
         component={ShopMain}
         options={{
-          title: '템플릿 마켓',
-          headerTitleStyle: {fontFamily: 'sd_gothic_m'},
+          // title: '템플릿 마켓111',
+          // headerTitleStyle: {fontFamily: 'sd_gothic_m'},
+          headerShown: false,
         }}
       />
       <Stack.Screen

@@ -24,6 +24,7 @@ const EnterCodeScreen = ({navigation}: Props) => {
 
   return (
     <View style={{flex: 1, backgroundColor: '#FBFBFB'}}>
+      <View style={{marginTop: 50}}></View>
       <View style={s.centerView}>
         <Text
           style={{
@@ -68,6 +69,7 @@ const EnterCodeScreen = ({navigation}: Props) => {
                   console.log('## axios res ##', res.data);
                   const {code, fullData} = res.data;
                   if (code === 0) {
+                    console.log('##############', typeof fullData);
                     const fullDataObj = JSON.parse(fullData);
                     const value = fullDataObj.value;
                     const name = value.valueName || '';
@@ -96,7 +98,7 @@ const EnterCodeScreen = ({navigation}: Props) => {
           }}>
           교환번호를 입력하면 상대방의 명함이 저장됩니다.
         </Text>
-
+        <View style={{marginTop: 20}}></View>
         <View style={{flexDirection: 'row', marginTop: 15}}>
           <TouchableOpacity
             style={s.keyItem}

@@ -165,15 +165,17 @@ const WalletMainScreen = ({navigation, route}: Props) => {
               currentGroupId: groupId,
             })
           }>
-          <Text>{currentGroup}</Text>
-          <Image source={imgArrowDown} style={styles.menuIcon} />
+          <Text style={styles.txt}>{currentGroup}</Text>
+          <Image source={imgArrowDown} style={[styles.menuIcon, {height: 8}]} />
         </TouchableOpacity>
 
         <View style={styles.menuExtra}>
           <TouchableOpacity
             style={styles.menuExtraItem}
             onPressOut={() => setModalVisible(true)}>
-            <Text>{filter === 'byName' ? '이름순' : '회사명순'}</Text>
+            <Text style={styles.txt}>
+              {filter === 'byName' ? '이름순' : '회사명순'}
+            </Text>
             <Image source={imgFilter} style={styles.menuIcon} />
           </TouchableOpacity>
 
@@ -192,7 +194,7 @@ const WalletMainScreen = ({navigation, route}: Props) => {
                 mainToggle: toggle,
               });
             }}>
-            <Text>편집</Text>
+            <Text style={styles.txt}>편집</Text>
             <Image source={imgPencil} style={styles.menuIcon} />
           </TouchableOpacity>
         </View>
@@ -218,9 +220,11 @@ const styles = StyleSheet.create({
     flex: 0.5,
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: 10,
   },
   menuIcon: {
-    width: 15,
+    width: 13,
     height: 13,
     marginLeft: 5,
   },
@@ -243,13 +247,18 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 8.5,
-    width: '90%',
-    left: '5%',
+    // width: '90%',
+    // left: '5%',
   },
   scrollView: {},
   modalBtn: {
     backgroundColor: 'green',
     marginVertical: 20,
+  },
+  txt: {
+    color: '#444444',
+    fontFamily: 'sd_gothic_b',
+    // fontSize: 15,
   },
 
   /** MODAL */

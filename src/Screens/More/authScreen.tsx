@@ -18,12 +18,12 @@ interface prop {
 const AuthMain = ({navigation}: prop) => {
   const [modalVisible1, setModalVisible1] = useState(false);
   const [modalVisible2, setModalVisible2] = useState(false);
-  let myIdOnServer = 0;
+  const [myInfo, setMyInfo] = useState(new Object());
 
   useEffect(() => {
     db.getMyInfo().then((info: any) => {
       console.log('# info #', info);
-      myIdOnServer = info.idOnServer;
+      setMyInfo(info);
     });
   }, []);
 
@@ -158,7 +158,7 @@ const AuthMain = ({navigation}: prop) => {
           borderColor: '#CFCFCF',
           borderBottomWidth: 1,
         }}>
-        <Text style={{...s.title1, marginLeft: 15}}>{'bvv8808'}</Text>
+        <Text style={{...s.title1, marginLeft: 15}}>{myInfo.myId}</Text>
         <Text style={{...s.title1, marginRight: 15}}>{'로그인 됨'}</Text>
       </View>
       <TouchableOpacity

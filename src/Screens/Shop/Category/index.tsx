@@ -22,8 +22,9 @@ const Category = () => {
         name="ShowByCategory"
         component={ShowByCategory}
         options={{
-          title: '',
-          headerTitleStyle: {fontFamily: 'sd_gothic_b', fontSize: 20},
+          // title: '',
+          // headerTitleStyle: {fontFamily: 'sd_gothic_b', fontSize: 20},
+          headerShown: false,
         }}
       />
       <Stack.Screen

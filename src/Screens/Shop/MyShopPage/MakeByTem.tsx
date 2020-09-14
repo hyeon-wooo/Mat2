@@ -21,34 +21,34 @@ const cardWidth = Dimensions.get('screen').width * 0.9;
 const requestPermission = async (setUploadedLogo: any) => {
   // await request(PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE).then((result) => {
   //   if (result === RESULTS.GRANTED) {
-      ImagePicker.launchImageLibrary(
-        {
-          title: 'Load Photo',
-          storageOptions: {
-            skipBackup: true,
-            path: 'images',
-          },
-        },
-        (response) => {
-          if (response.didCancel) {
-            console.log('## loading photo is canceled ##');
-          } else if (response.error) {
-            console.log('## loading photo error ##', response);
-          } else {
-            // console.log('### img data ###', response.data)
-            // data.valueLogo = response.data
-            const fileSize = (response.data.length * (3 / 4) - 2) / 1024 / 1024;
-            console.log('# fileSize #', fileSize);
-            if (fileSize > 0.5) {
-              ToastAndroid.show(
-                '0.5MB 이상의 이미지는 사용하실 수 없습니다',
-                ToastAndroid.SHORT,
-              );
-            } else setUploadedLogo(response.data);
-          }
-        },
-      );
-    }
+  ImagePicker.launchImageLibrary(
+    {
+      title: 'Load Photo',
+      storageOptions: {
+        skipBackup: true,
+        path: 'images',
+      },
+    },
+    (response) => {
+      if (response.didCancel) {
+        console.log('## loading photo is canceled ##');
+      } else if (response.error) {
+        console.log('## loading photo error ##', response);
+      } else {
+        // console.log('### img data ###', response.data)
+        // data.valueLogo = response.data
+        const fileSize = (response.data.length * (3 / 4) - 2) / 1024 / 1024;
+        console.log('# fileSize #', fileSize);
+        if (fileSize > 0.5) {
+          ToastAndroid.show(
+            '0.5MB 이상의 이미지는 사용하실 수 없습니다',
+            ToastAndroid.SHORT,
+          );
+        } else setUploadedLogo(response.data);
+      }
+    },
+  );
+};
 //   });
 // };
 
@@ -203,7 +203,7 @@ const MakeByTem = ({navigation, route}: prop) => {
                 '모든 항목에 정보를 입력해주세요',
                 ToastAndroid.SHORT,
               );
-            } else if (uploadedLogo.length === 0) {
+            } else if (uploadedLogo.length === 0 && keys.includes('logo')) {
               ToastAndroid.show(
                 '1:1 비율의 로고를 추가해주세요',
                 ToastAndroid.SHORT,

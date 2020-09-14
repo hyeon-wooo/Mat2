@@ -42,7 +42,7 @@ const EditGroupScreen = ({navigation, route}: Props) => {
       <View>
         {/* MODAL 1 */}
         <Modal
-          animationType="slide"
+          animationType="none"
           transparent={true}
           visible={modalVisible1}
           onRequestClose={() => {}}>
@@ -114,7 +114,7 @@ const EditGroupScreen = ({navigation, route}: Props) => {
 
         {/* MODAL 2 */}
         <Modal
-          animationType="slide"
+          animationType="none"
           transparent={true}
           visible={modalVisible2}
           onRequestClose={() => {}}>
@@ -163,7 +163,7 @@ const EditGroupScreen = ({navigation, route}: Props) => {
 
         {/* MODAL 3 */}
         <Modal
-          animationType="slide"
+          animationType="none"
           transparent={true}
           visible={modalVisible3}
           onRequestClose={() => {}}>

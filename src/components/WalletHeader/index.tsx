@@ -20,15 +20,20 @@ const WalletHeader = ({onPressOut}: Props) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
+    height: 55,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     backgroundColor: '#FBFBFB',
   },
   title: {
-    marginLeft: 15,
+    // marginLeft: 15,
+    // fontSize: 20,
     fontSize: 20,
+    fontFamily: 'sd_gothic_b',
+    color: '#444444',
+    marginLeft: 25,
   },
   btnSearch: {
     width: 20,
