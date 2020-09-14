@@ -25,9 +25,9 @@ interface Props {
 const CreateCode = ({navigation, route}: Props) => {
   const [receivedCode, setReceivedCode] = useState('0000');
   const focused = useIsFocused();
+  const [selectedCard, setSelectedCard] = useState(route.params[0]);
+
   useEffect(() => {
-    const selectedCard = route.params[0];
-    console.log('#card# ,', selectedCard);
     if (focused) {
       db.getMyInfo()
         .then((info: any) => {
@@ -36,7 +36,10 @@ const CreateCode = ({navigation, route}: Props) => {
             {
               userId: info.idOnServer,
               cardId: selectedCard.id,
-              fullData: selectedCard.fullData,
+              fullData:
+                selectedCard.fullData +
+                selectedCard.fullData2 +
+                selectedCard.fullData3,
             },
             {
               headers: {

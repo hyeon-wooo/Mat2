@@ -26,7 +26,6 @@ const SignInScreen = ({navigation, setIsLoggedIn}: prop) => {
   const [pw, setPw] = useState('');
   const [selected1, setSelected1] = useState(false);
   const [selected2, setSelected2] = useState(false);
-
   return (
     <View
       style={{
@@ -50,7 +49,9 @@ const SignInScreen = ({navigation, setIsLoggedIn}: prop) => {
               : {borderColor: '#7D7D7D', borderBottomWidth: 0.5},
           ]}
           placeholder="ID"
-          onChangeText={(text: string) => setUserId(text)}
+          onChangeText={(text: string) => {
+            setUserId(text);
+          }}
           onFocus={() => setSelected1(true)}
           onEndEditing={() => setSelected1(false)}
         />
