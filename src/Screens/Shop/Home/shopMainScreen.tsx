@@ -14,6 +14,11 @@ import {btnOk, imgChecked} from '~/Assets/Images';
 import {useIsFocused} from '@react-navigation/native';
 import TemplateCard from '~/components/TemplateCard';
 import PointshopHeader from '~/components/PointShopHeader';
+import {BannerAd, BannerAdSize, TestIds} from '@react-native-firebase/admob';
+
+const adUnitId = __DEV__
+  ? TestIds.BANNER
+  : 'ca-app-pub-5058591706901664/7933737905';
 
 const screenWidth = Dimensions.get('screen').width;
 const temWidth = (screenWidth / 2) * (9 / 10);
@@ -107,7 +112,13 @@ const ShopMain = ({navigation, route}: Props) => {
   return (
     <View style={{flex: 1, alignItems: 'center', backgroundColor: '#FBFBFB'}}>
       <PointshopHeader title="템플릿 마켓" />
-      <View style={s.ads}></View>
+      <BannerAd
+        unitId={adUnitId}
+        size={BannerAdSize.SMART_BANNER}
+        requestOptions={{
+          requestNonPersonalizedAdsOnly: true,
+        }}
+      />
       <View style={s.filterBox}>
         <TouchableOpacity
           style={[

@@ -16,6 +16,9 @@ import TemplateCard from '~/components/TemplateCard';
 import {template} from '@babel/core';
 import {imgDelete, imgChecked} from '~/Assets/Images';
 import {useIsFocused} from '@react-navigation/native';
+import { BannerAd, BannerAdSize, TestIds } from '@react-native-firebase/admob';
+
+const adUnitId = __DEV__ ? TestIds.BANNER : 'ca-app-pub-5058591706901664/7933737905';
 
 const cardWidth = Dimensions.get('screen').width * 0.9;
 
@@ -154,7 +157,13 @@ const MyPage = ({navigation, route}: Props) => {
         </View>
       </Modal>
 
-      <View style={s.ads}></View>
+      <BannerAd
+      unitId={adUnitId}
+      size={BannerAdSize.SMART_BANNER}
+      requestOptions={{
+        requestNonPersonalizedAdsOnly: true,
+      }}
+    />
       <View style={s.tab}>
         <TouchableOpacity
           style={[
