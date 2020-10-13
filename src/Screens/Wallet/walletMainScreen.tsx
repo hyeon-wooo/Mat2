@@ -9,14 +9,12 @@ import {
   TouchableHighlight,
 } from 'react-native';
 import {imgArrowDown, imgPencil, imgFilter} from '~/Assets/Images';
-import S from 'styled-components/native';
 
 import WalletHeader from '~/components/WalletHeader';
 import AccordionItem from '~/components/AccordionItem';
 
 import SQLite from 'react-native-sqlite-storage';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import data from '~/Assets/layoutCards';
 import {useIsFocused} from '@react-navigation/native';
 
 interface Props {
@@ -77,7 +75,7 @@ const getCards = (groupId: number, filter: string) =>
     );
   });
 
-const WalletMainScreen = ({navigation, route}: Props) => {
+const WalletMainScreen = ({navigation}: Props) => {
   // groupId : 0(전체), 1(미지정그룹)
   const [groupId, setGroupId] = useState(0);
   const [currentGroup, setCurrentGroup] = useState('전체');

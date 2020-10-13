@@ -61,7 +61,7 @@ const SelectCardToSend = ({route, navigation}: Props) => {
       </View>
       <View style={styles.scrollContainer}>
         <ScrollView>
-          {myCards.map((card: any, idx: number) => {
+          {myCards.map((card: any) => {
             const cardData = JSON.parse(
               card.fullData + card.fullData2 + card.fullData3,
             );

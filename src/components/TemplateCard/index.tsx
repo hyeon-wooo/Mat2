@@ -1,20 +1,29 @@
 import React from 'react';
-import {View, Text, StyleSheet, Image} from 'react-native';
+import {View, Text, StyleSheet, Image, Dimensions} from 'react-native';
 import {matIcon} from '~/Assets/Images';
+
+const screenWidth = Dimensions.get('screen').width;
 
 interface Props {
   cardWidth: number;
   data?: any;
   rotate?: any;
   borderRadius?: boolean;
+  showDefaultLogo?: boolean;
 }
 
-const Card = ({cardWidth, data, rotate, borderRadius}: Props) => {
+const Card = ({
+  cardWidth,
+  data,
+  rotate,
+  borderRadius,
+  showDefaultLogo,
+}: Props) => {
   // console.log('# templateCard data #', data);
   const {label, value} = data;
   const background = value.background;
   const cardHeight = cardWidth * (9 / 16);
-  console.log(value.style);
+  // console.log(value.style);
 
   return (
     <View
@@ -36,7 +45,7 @@ const Card = ({cardWidth, data, rotate, borderRadius}: Props) => {
         />
       )}
 
-      {value.style.logo && (
+      {value.style.logo && showDefaultLogo && (
         <Image
           //   source={{uri: `data:image/png;base64,${value.valueLogo}`}}
           source={
@@ -164,6 +173,13 @@ const Card = ({cardWidth, data, rotate, borderRadius}: Props) => {
             value.style.name.fontSize
               ? {fontSize: value.style.name.fontSize * (cardWidth / 100)}
               : {},
+            value.style.name.letterSpacing
+              ? {
+                  letterSpacing:
+                    value.style.name.letterSpacing *
+                    (cardWidth / (screenWidth * 0.8)),
+                }
+              : {},
           ]}>
           {value.valueName}
         </Text>
@@ -189,6 +205,13 @@ const Card = ({cardWidth, data, rotate, borderRadius}: Props) => {
             value.style.phone.fontSize
               ? {fontSize: value.style.phone.fontSize * (cardWidth / 100)}
               : {},
+            value.style.phone.paddingRight
+              ? {
+                  paddingRight:
+                    value.style.phone.paddingRight *
+                    (cardWidth / (screenWidth * 0.8)),
+                }
+              : {},
           ]}>
           {value.valuePhone}
         </Text>
@@ -201,6 +224,13 @@ const Card = ({cardWidth, data, rotate, borderRadius}: Props) => {
             value.style.fax.fontSize
               ? {fontSize: value.style.fax.fontSize * (cardWidth / 100)}
               : {},
+            value.style.fax.paddingRight
+              ? {
+                  paddingRight:
+                    value.style.fax.paddingRight *
+                    (cardWidth / (screenWidth * 0.8)),
+                }
+              : {},
           ]}>
           {value.valueFax}
         </Text>
@@ -212,6 +242,13 @@ const Card = ({cardWidth, data, rotate, borderRadius}: Props) => {
             value.style.company || {},
             value.style.company.fontSize
               ? {fontSize: value.style.company.fontSize * (cardWidth / 100)}
+              : {},
+            value.style.company.paddingRight
+              ? {
+                  paddingRight:
+                    value.style.company.paddingRight *
+                    (cardWidth / (screenWidth * 0.8)),
+                }
               : {},
           ]}>
           {value.valueCompany}
@@ -249,6 +286,13 @@ const Card = ({cardWidth, data, rotate, borderRadius}: Props) => {
             value.style.comAddr.fontSize
               ? {fontSize: value.style.comAddr.fontSize * (cardWidth / 100)}
               : {},
+            value.style.comAddr.paddingRight
+              ? {
+                  paddingRight:
+                    value.style.comAddr.paddingRight *
+                    (cardWidth / (screenWidth * 0.8)),
+                }
+              : {},
           ]}>
           {value.valueComAddr}
         </Text>
@@ -260,6 +304,13 @@ const Card = ({cardWidth, data, rotate, borderRadius}: Props) => {
             value.style.comNum || {},
             value.style.comNum.fontSize
               ? {fontSize: value.style.comNum.fontSize * (cardWidth / 100)}
+              : {},
+            value.style.comNum.paddingRight
+              ? {
+                  paddingRight:
+                    value.style.comNum.paddingRight *
+                    (cardWidth / (screenWidth * 0.8)),
+                }
               : {},
           ]}>
           {value.valueComNum}

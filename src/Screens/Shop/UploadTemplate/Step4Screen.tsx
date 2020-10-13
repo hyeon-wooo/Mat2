@@ -43,7 +43,11 @@ const Step3Screen = ({route, navigation}: Props) => {
           <View style={styles.content}>
             <View style={styles.cardContainer}>
               <View style={styles.card}>
-                <TemplateCard data={temData} cardWidth={cardWidth} />
+                <TemplateCard
+                  data={temData}
+                  cardWidth={cardWidth}
+                  showDefaultLogo
+                />
               </View>
             </View>
 

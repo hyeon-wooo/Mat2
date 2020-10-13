@@ -23,7 +23,11 @@ const ConfirmCard = ({navigation, route}: prop) => {
     <View style={s.wrap}>
       <Text style={s.description}>명함을 확인해주세요</Text>
       <View style={s.cardContainer}>
-        <TemplateCard data={cardDataObj} cardWidth={cardWidth} />
+        <TemplateCard
+          data={cardDataObj}
+          cardWidth={cardWidth}
+          showDefaultLogo
+        />
       </View>
       <View style={s.btnContainer}>
         <TouchableOpacity style={s.btnPrev} onPress={() => navigation.goBack()}>

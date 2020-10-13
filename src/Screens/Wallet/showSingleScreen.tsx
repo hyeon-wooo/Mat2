@@ -8,7 +8,6 @@ import {
   TouchableOpacity,
   TextInput,
 } from 'react-native';
-import SQLite from 'react-native-sqlite-storage';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {ScrollView} from 'react-native-gesture-handler';
@@ -383,7 +382,10 @@ const EditSingleScreen = ({navigation, route}: Props) => {
                   valueStyle.comNum,
                   {position: 'absolute'},
                   valueStyle.comNum.fontSize
-                    ? {fontSize: valueStyle.v.fontSize * (screenWidth / 100)}
+                    ? {
+                        fontSize:
+                          valueStyle.comNum.fontSize * (screenWidth / 100),
+                      }
                     : {},
                 ]}>
                 {valueComNum}

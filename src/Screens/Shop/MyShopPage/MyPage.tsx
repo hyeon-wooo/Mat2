@@ -13,12 +13,13 @@ import {
 import axios from 'axios';
 import db from '~/DB';
 import TemplateCard from '~/components/TemplateCard';
-import {template} from '@babel/core';
 import {imgDelete, imgChecked} from '~/Assets/Images';
 import {useIsFocused} from '@react-navigation/native';
-import { BannerAd, BannerAdSize, TestIds } from '@react-native-firebase/admob';
+import {BannerAd, BannerAdSize, TestIds} from '@react-native-firebase/admob';
 
-const adUnitId = __DEV__ ? TestIds.BANNER : 'ca-app-pub-5058591706901664/7933737905';
+const adUnitId = __DEV__
+  ? TestIds.BANNER
+  : 'ca-app-pub-5058591706901664/7933737905';
 
 const cardWidth = Dimensions.get('screen').width * 0.9;
 
@@ -158,12 +159,12 @@ const MyPage = ({navigation, route}: Props) => {
       </Modal>
 
       <BannerAd
-      unitId={adUnitId}
-      size={BannerAdSize.SMART_BANNER}
-      requestOptions={{
-        requestNonPersonalizedAdsOnly: true,
-      }}
-    />
+        unitId={adUnitId}
+        size={BannerAdSize.SMART_BANNER}
+        requestOptions={{
+          requestNonPersonalizedAdsOnly: true,
+        }}
+      />
       <View style={s.tab}>
         <TouchableOpacity
           style={[
@@ -268,6 +269,7 @@ const MyPage = ({navigation, route}: Props) => {
                   <TemplateCard
                     data={JSON.parse(tem.fullData)}
                     cardWidth={cardWidth}
+                    showDefaultLogo
                   />
                 </View>
                 <Image
@@ -320,6 +322,7 @@ const MyPage = ({navigation, route}: Props) => {
                   <TemplateCard
                     data={JSON.parse(tem.fullData)}
                     cardWidth={cardWidth}
+                    showDefaultLogo
                   />
 
                   <Image

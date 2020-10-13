@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {View, Text, StyleSheet, Dimensions} from 'react-native';
+import React from 'react';
+import {Text, StyleSheet, Dimensions} from 'react-native';
 import {
   Collapse,
   CollapseHeader,

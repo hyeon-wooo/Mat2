@@ -123,7 +123,12 @@ const TemplateDetail = ({route, navigation}: Props) => {
       <View style={styles.content}>
         <View style={styles.cardContainer}>
           <View style={styles.card}>
-            <TemplateCard data={temData} cardWidth={cardWidth} borderRadius />
+            <TemplateCard
+              data={temData}
+              cardWidth={cardWidth}
+              borderRadius
+              showDefaultLogo
+            />
           </View>
         </View>
 

@@ -242,7 +242,7 @@ const Card = ({cardWidth, data, rotate}: Props) => {
             {value.valueComAddr}
           </Text>
         )}
-      {value.valueComNum.lenght > 0 && value.style.comNum && (
+      {value.valueComNum.length > 0 && value.style.comNum && (
         <Text
           style={[
             styles.valueText,

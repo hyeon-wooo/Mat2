@@ -222,6 +222,7 @@ const ShowByCategory = ({navigation, route}: Props) => {
                         data={JSON.parse(tem.fullData)}
                         cardWidth={temWidth}
                         borderRadius
+                        showDefaultLogo
                       />
                     </TouchableOpacity>
                   );

@@ -1,5 +1,4 @@
-import React, {useState, useEffect} from 'react';
-import S from 'styled-components/native';
+import React, {useState} from 'react';
 import {
   StyleSheet,
   View,
@@ -7,20 +6,17 @@ import {
   ScrollView,
   Image,
   TouchableOpacity,
+  Text,
+  ToastAndroid,
 } from 'react-native';
-import LayoutCard from '~/components/LayoutCard';
-import Header from '~/components/MakeHeader';
+// import LayoutCard from '~/components/LayoutCard';
+// import Header from '~/components/MakeHeader';
 import {imgChecked, header2} from '~/Assets/Images';
 import TemplateCard from '~/components/TemplateCard';
 
 const layoutData = require('~/Assets/layoutCards');
 // console.log('## layoutData ##', layoutData)
 const deviceWidth = Dimensions.get('window').width;
-
-const Container = S.ScrollView`
-    background-color: #333;
-`;
-const Text = S.Text``;
 
 interface Props {
   route: any;
@@ -78,11 +74,17 @@ const SelectMatLayoutScreen = ({route, navigation}: Props) => {
             <TouchableOpacity
               style={styles.btnNext}
               onPress={() => {
-                if (selected !== 0)
+                if (selected !== 0) {
                   navigation.navigate(
                     'SelectBackground',
                     layoutData.filter((data: any) => data.id === selected)[0],
                   );
+                } else {
+                  ToastAndroid.show(
+                    '레이아웃을 선택해주세요',
+                    ToastAndroid.SHORT,
+                  );
+                }
               }}>
               <Text style={styles.btnText}>다음</Text>
             </TouchableOpacity>
@@ -137,7 +139,7 @@ const styles = StyleSheet.create({
     marginVertical: 20,
     width: '90%',
     left: '5%',
-    flexDirection: 'row-reverse',
+    // flexDirection: 'row-reverse',
   },
   btnNext: {
     width: 70,
@@ -146,6 +148,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     justifyContent: 'center',
     alignItems: 'center',
+    alignSelf: 'flex-end',
   },
   btnText: {
     fontFamily: 'sd_gothic_m',

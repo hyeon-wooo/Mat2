@@ -52,6 +52,7 @@ const TemDetail = ({navigation, route}: prop) => {
           data={JSON.parse(tem.fullData)}
           cardWidth={cardWidth}
           borderRadius
+          showDefaultLogo
         />
       </View>
       <View
