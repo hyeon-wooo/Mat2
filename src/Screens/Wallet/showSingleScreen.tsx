@@ -36,6 +36,9 @@ const EditSingleScreen = ({navigation, route}: Props) => {
   const label = cardData.label;
   const valueStyle = cardValue.style;
 
+  // console.log('### DATA ### ', Object.keys(cardValue));
+  // console.log('### DATA ### ', cardValue);
+
   const [memo, setMemo] = useState(route.params.card.memo || '');
   const [valueName, setValueName] = useState(cardValue.valueName);
   const [valueCompany, setValueCompany] = useState(cardValue.valueCompany);
@@ -127,7 +130,15 @@ const EditSingleScreen = ({navigation, route}: Props) => {
                 ? {backgroundColor: cardValue.background.color}
                 : {},
             ]}>
-            {cardValue.valueLogo && (
+            {!cardValue.background.isColor && (
+              <Image
+                source={{
+                  uri: `data:image/png;base64,${cardValue.background.backData}`,
+                }}
+                style={[{width: screenWidth, height: cardHeight}]}
+              />
+            )}
+            {cardValue.valueLogo.length > 0 && (
               <Image
                 source={{uri: `data:image/png;base64,${cardValue.valueLogo}`}}
                 style={[

@@ -91,11 +91,11 @@ const getCards = async (setCards: any) => {
   return data;
 };
 
-const Cards = (cardData: any) => {
+const Cards = (cardData: any, navi: any) => {
   let cards = cardData.map((data: any, key: any) => (
     <View key={key}>
       <Text style={styles.nameOfCard}>{data.value.cardName || ''}</Text>
-      <View
+      <TouchableOpacity
         style={{
           alignItems: 'center',
           left: '5%',
@@ -103,9 +103,10 @@ const Cards = (cardData: any) => {
           height: screenWidth * 0.9 * (9 / 16),
           borderRadius: 5,
           elevation: 5,
-        }}>
+        }}
+        onPressIn={() => navi('MyCardDetail', {cardData: data})}>
         <TemplateCard cardWidth={screenWidth * 0.9} data={data} borderRadius />
-      </View>
+      </TouchableOpacity>
     </View>
   ));
   cards.push(
@@ -214,7 +215,9 @@ const mainScreen = ({route, navigation}: Props) => {
           <View style={{width: '100%', height: '100%'}}>
             <EmptyView1 />
             <SwiperContainer style={styles.swiperContainer}>
-              <Swiper key={cardData.length}>{Cards(cardData)}</Swiper>
+              <Swiper key={cardData.length}>
+                {Cards(cardData, navigation.push)}
+              </Swiper>
             </SwiperContainer>
             <EmptyView2 />
 

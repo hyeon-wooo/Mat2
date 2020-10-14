@@ -13,6 +13,7 @@ import createCode from './Screens/Home/TradeCode/createCode';
 import selectCardToSend from './Screens/Home/TradeCode/selectCardToSendScreen';
 import enterCode from './Screens/Home/TradeCode/enterCode';
 import SignUp from './Screens/SignUpScreen';
+import MyCardDetail from '~/Screens/Home/MyCardDetail';
 
 const Stack = createStackNavigator();
 const HomeStack = () => {
@@ -101,6 +102,14 @@ const HomeStack = () => {
         component={selectCardToSend}
         options={{
           title: '카드 선택',
+          headerTitleStyle: {fontFamily: 'sd_gothic_b'},
+        }}
+      />
+      <Stack.Screen
+        name="MyCardDetail"
+        component={MyCardDetail}
+        options={{
+          title: '내 명함',
           headerTitleStyle: {fontFamily: 'sd_gothic_b'},
         }}
       />
